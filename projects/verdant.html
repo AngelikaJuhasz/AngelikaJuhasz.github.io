@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!-- Security & crawler meta tags -->
+<meta name="referrer" content="no-referrer">
+<meta name="robots" content="index, follow, noai, noimageai">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Verdant — Tayla Silverwood</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* === LIGHT MODE === */
+  :root {
+    --cream: #f9f4ec;
+    --cream-dark: #f0e8d8;
+    --green-deep: #3a5c3a;
+    --green-mid: #5a8a5a;
+    --green-light: #a8c8a0;
+    --green-pale: #d4e8cc;
+    --gold: #c8a84b;
+    --gold-light: #e8d4a0;
+    --text-dark: #2a2a20;
+    --text-mid: #5a5a48;
+    --text-light: #8a8a70;
+    --nav-bg: rgba(249, 244, 236, 0.9);
+    --card-bg: #ffffff;
+  }
+
+  /* === EXPLICIT LIGHT OVERRIDE === */
+  :root.light {
+    --cream: #f9f4ec;
+    --cream-dark: #f0e8d8;
+    --green-deep: #3a5c3a;
+    --green-mid: #5a8a5a;
+    --green-light: #a8c8a0;
+    --green-pale: #d4e8cc;
+    --gold: #c8a84b;
+    --gold-light: #e8d4a0;
+    --text-dark: #2a2a20;
+    --text-mid: #5a5a48;
+    --text-light: #8a8a70;
+    --nav-bg: rgba(249, 244, 236, 0.9);
+    --card-bg: #ffffff;
+  }
+
+  /* === DARK MODE === */
+  :root.dark {
+    --cream: #141914;
+    --cream-dark: #1c231c;
+    --green-deep: #90d090;
+    --green-mid: #68b068;
+    --green-light: #4a8a4a;
+    --green-pale: #1a2e1a;
+    --gold: #e0b84e;
+    --gold-light: #3a3010;
+    --text-dark: #eef6ee;
+    --text-mid: #b8d0b0;
+    --text-light: #708870;
+    --nav-bg: rgba(14, 20, 14, 0.92);
+    --card-bg: #1a2a1a;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light):not(.dark) {
+      --cream: #141914;
+      --cream-dark: #1c231c;
+      --green-deep: #90d090;
+      --green-mid: #68b068;
+      --green-light: #4a8a4a;
+      --green-pale: #1a2e1a;
+      --gold: #e0b84e;
+      --gold-light: #3a3010;
+      --text-dark: #eef6ee;
+      --text-mid: #b8d0b0;
+      --text-light: #708870;
+      --nav-bg: rgba(14, 20, 14, 0.92);
+      --card-bg: #1a2a1a;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text-dark);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  /* === NAV === */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 4rem;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(90, 138, 90, 0.15);
+  }
+
+  .nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .nav-back {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    text-decoration: none;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+  }
+
+  .nav-back:hover { color: var(--green-deep); }
+
+  .nav-divider {
+    width: 1px;
+    height: 16px;
+    background: var(--green-light);
+    opacity: 0.5;
+  }
+
+  .nav-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--green-deep);
+  }
+
+  .theme-toggle {
+    background: var(--green-pale);
+    border: 1.5px solid rgba(90, 138, 90, 0.25);
+    border-radius: 50px;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .theme-toggle:hover { background: var(--green-light); color: var(--green-deep); }
+  .theme-toggle .icon { transition: transform 0.4s ease; }
+  .theme-toggle:hover .icon { transform: rotate(20deg); }
+
+  /* === HERO BANNER === */
+  .project-hero {
+    background: linear-gradient(135deg, var(--green-deep), var(--green-mid));
+    padding: 5rem 5rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-hero::before {
+    content: '';
+    position: absolute;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255,255,255,0.07), transparent 70%);
+    top: 50%; right: 5%;
+    transform: translateY(-50%);
+  }
+
+  .project-hero-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+  }
+
+  .breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .breadcrumb a {
+    color: rgba(255,255,255,0.55);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .breadcrumb a:hover { color: white; }
+
+  .project-type-tag {
+    display: inline-block;
+    background: rgba(255,255,255,0.15);
+    color: rgba(255,255,255,0.9);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.9rem;
+    border-radius: 20px;
+    margin-bottom: 1.25rem;
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+
+  .project-hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    color: white;
+    line-height: 1.1;
+    margin-bottom: 1.25rem;
+  }
+
+  .project-hero h1 em {
+    font-style: italic;
+    color: var(--gold-light);
+  }
+
+  .project-tagline {
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.75);
+    max-width: 55ch;
+    line-height: 1.7;
+    margin-bottom: 2rem;
+  }
+
+  .project-meta-row {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .meta-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .meta-value {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.9);
+    font-weight: 400;
+  }
+
+  /* === MAIN CONTENT === */
+  .project-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 4rem 2rem 6rem;
+  }
+
+  /* === SCREENSHOT AREA === */
+  .screenshot-grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr;
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+
+  .screenshot {
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--green-pale);
+    border: 1px solid rgba(90, 138, 90, 0.15);
+    aspect-ratio: 16/10;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0.75rem;
+    color: var(--text-light);
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  }
+
+  .screenshot:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(58, 92, 58, 0.15);
+  }
+
+  .screenshot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: none; /* shown when src is set */
+  }
+
+  .screenshot img[src] { display: block; }
+
+  .screenshot-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  .screenshot-placeholder .icon { font-size: 2rem; opacity: 0.4; }
+
+  .screenshot-placeholder p {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    line-height: 1.5;
+  }
+
+  .screenshot-caption {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent);
+    color: white;
+    font-size: 0.78rem;
+    padding: 1rem 1rem 0.6rem;
+    opacity: 0;
+    transition: opacity 0.2s;
+    display: none; /* shown when there's an image */
+  }
+
+  .screenshot:hover .screenshot-caption { opacity: 1; }
+
+  .screenshot-tall {
+    grid-row: span 2;
+    aspect-ratio: auto;
+  }
+
+  /* === CONTENT SECTIONS === */
+  .content-section {
+    margin-bottom: 3.5rem;
+  }
+
+  .content-section-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 0.75rem;
+  }
+
+  .content-section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--green-deep);
+    margin-bottom: 1.25rem;
+    line-height: 1.3;
+  }
+
+  .content-section p {
+    font-size: 0.98rem;
+    line-height: 1.9;
+    color: var(--text-mid);
+    margin-bottom: 1rem;
+  }
+
+  /* === ROLE HIGHLIGHT BOX === */
+  .role-box {
+    background: linear-gradient(135deg, var(--green-pale), var(--gold-light));
+    border-radius: 16px;
+    padding: 2rem 2.5rem;
+    margin: 2.5rem 0;
+    border-left: 4px solid var(--green-mid);
+  }
+
+  .role-box-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 0.6rem;
+  }
+
+  .role-box p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: var(--text-dark);
+    margin: 0;
+  }
+
+  /* === CONTRIBUTIONS LIST === */
+  .contributions {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .contributions li {
+    display: flex;
+    gap: 0.9rem;
+    align-items: flex-start;
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: var(--text-mid);
+  }
+
+  .contributions li::before {
+    content: '✦';
+    color: var(--gold);
+    font-size: 0.7rem;
+    margin-top: 0.35rem;
+    flex-shrink: 0;
+  }
+
+  /* === TAGS ROW === */
+  .tags-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+  }
+
+  .tag {
+    background: var(--green-pale);
+    color: var(--green-deep);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(90, 138, 90, 0.2);
+  }
+
+  /* === DIVIDER === */
+  .divider {
+    border: none;
+    border-top: 1px solid var(--cream-dark);
+    margin: 3rem 0;
+  }
+
+  /* === NEXT PROJECT NAV === */
+  .project-nav {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-top: 4rem;
+  }
+
+  .project-nav-card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    padding: 1.5rem;
+    text-decoration: none;
+    border: 1px solid var(--cream-dark);
+    transition: all 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .project-nav-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(58, 92, 58, 0.1);
+    border-color: var(--green-light);
+  }
+
+  .project-nav-direction {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-light);
+  }
+
+  .project-nav-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    color: var(--green-deep);
+  }
+
+  .project-nav-card.next { text-align: right; }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 700px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .project-hero { padding: 3rem 1.5rem; }
+    .project-content { padding: 3rem 1rem 4rem; }
+    .screenshot-grid { grid-template-columns: 1fr; }
+    .screenshot-tall { grid-row: span 1; }
+    .project-nav { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="../index.html" class="nav-back">← Portfolio</a>
+    <div class="nav-divider"></div>
+    <span class="nav-title">Verdant</span>
+  </div>
+  <button class="theme-toggle" id="theme-btn" aria-label="Toggle dark mode">
+    <span class="icon" id="theme-icon">🌙</span>
+    <span id="theme-label">Dark</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<div class="project-hero">
+  <div class="project-hero-inner">
+    <div class="breadcrumb">
+      <a href="../index.html">Home</a>
+      <span>›</span>
+      <a href="../index.html#projects">Projects</a>
+      <span>›</span>
+      <span>Verdant</span>
+    </div>
+    <div class="project-type-tag">Game Design · Solo Project</div>
+    <h1>Verdant — <em>A Puzzle Platformer</em></h1>
+    <p class="project-tagline">
+      A short-form puzzle platformer built around plant growth mechanics, designed and prototyped solo as part of a game design fundamentals course.
+    </p>
+    <div class="project-meta-row">
+      <div class="meta-item">
+        <span class="meta-label">Year</span>
+        <span class="meta-value">2024</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Role</span>
+        <span class="meta-value">Solo Designer & Developer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Tools</span>
+        <span class="meta-value">Unity · Figma</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Duration</span>
+        <span class="meta-value">8 Weeks</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="project-content">
+
+  <!-- SCREENSHOTS -->
+  <!-- 
+    HOW TO ADD SCREENSHOTS:
+    Replace the <div class="screenshot-placeholder"> inside each .screenshot div with:
+    <img src="../images/verdant-screenshot-1.jpg" alt="Description">
+    <div class="screenshot-caption">Your caption here</div>
+
+    Put your images in a folder called "images" next to your index.html
+  -->
+  <div class="screenshot-grid">
+    <div class="screenshot screenshot-tall">
+      <div class="screenshot-placeholder">
+        <span class="icon">🖼️</span>
+        <p>Add your main screenshot here<br><small>Replace placeholder with &lt;img&gt; tag</small></p>
+      </div>
+    </div>
+    <div class="screenshot">
+      <div class="screenshot-placeholder">
+        <span class="icon">🖼️</span>
+        <p>Screenshot 2</p>
+      </div>
+    </div>
+    <div class="screenshot">
+      <div class="screenshot-placeholder">
+        <span class="icon">🖼️</span>
+        <p>Screenshot 3</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- OVERVIEW -->
+  <div class="content-section">
+    <p class="content-section-label">Overview</p>
+    <h2>What is Verdant?</h2>
+    <p>
+      Write a short overview of the project here — what it is, what it does, and why you made it. Keep it punchy, 2–3 sentences is plenty. Hiring managers skim, so lead with the most interesting thing.
+    </p>
+    <p>
+      This second paragraph is a good place for a bit more context — the course it was for, the brief you were given, or the problem you were trying to solve.
+    </p>
+  </div>
+
+  <!-- MY ROLE -->
+  <div class="role-box">
+    <div class="role-box-label">My Role</div>
+    <p>
+      Describe specifically what YOU did on this project. Even on a solo project this matters — were you responsible for design, code, art, sound? What decisions did you own? This is what hiring managers actually care about.
+    </p>
+  </div>
+
+  <!-- WHAT I DID -->
+  <div class="content-section">
+    <p class="content-section-label">Contributions</p>
+    <h2>What I worked on</h2>
+    <ul class="contributions">
+      <li>Replace this with something specific you did — e.g. "Designed the core plant growth mechanic and iterated on it across 3 playtesting sessions"</li>
+      <li>Another specific contribution — what problem did you solve, and how?</li>
+      <li>Something you're particularly proud of or that shows your thinking</li>
+      <li>Any PM or collaboration aspects worth mentioning</li>
+    </ul>
+  </div>
+
+  <hr class="divider">
+
+  <!-- WHAT I LEARNED -->
+  <div class="content-section">
+    <p class="content-section-label">Reflection</p>
+    <h2>What I learned</h2>
+    <p>
+      This section is underrated on portfolios. Talking about what you'd do differently or what surprised you shows maturity and self-awareness — qualities hiring managers actively look for. Don't skip it!
+    </p>
+    <p>
+      A specific challenge you hit and how you worked through it goes really well here too.
+    </p>
+  </div>
+
+  <!-- TOOLS & TAGS -->
+  <div class="content-section">
+    <p class="content-section-label">Built with</p>
+    <div class="tags-row">
+      <span class="tag">Unity</span>
+      <span class="tag">Level Design</span>
+      <span class="tag">Prototyping</span>
+      <span class="tag">Playtesting</span>
+      <span class="tag">Figma</span>
+    </div>
+  </div>
+
+  <!-- NEXT / PREV PROJECT NAV -->
+  <div class="project-nav">
+    <a href="sprint-coordinator.html" class="project-nav-card">
+      <span class="project-nav-direction">← Previous</span>
+      <span class="project-nav-name">Sprint Coordinator</span>
+    </a>
+    <a href="onboarding-study.html" class="project-nav-card next">
+      <span class="project-nav-direction">Next →</span>
+      <span class="project-nav-name">Onboarding Flow Study</span>
+    </a>
+  </div>
+
+</div>
+
+<script>
+  const root = document.documentElement;
+  const icon = document.getElementById('theme-icon');
+  const label = document.getElementById('theme-label');
+
+  function getSystemPref() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function applyTheme(theme) {
+    root.classList.remove('dark', 'light');
+    root.classList.add(theme);
+    if (icon) icon.textContent = theme === 'dark' ? '☀️' : '🌙';
+    if (label) label.textContent = theme === 'dark' ? 'Light' : 'Dark';
+  }
+
+  const saved = localStorage.getItem('theme');
+  applyTheme(saved || getSystemPref());
+
+  document.getElementById('theme-btn').addEventListener('click', function() {
+    const next = root.classList.contains('dark') ? 'light' : 'dark';
+    localStorage.setItem('theme', next);
+    applyTheme(next);
+  });
+
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) applyTheme(e.matches ? 'dark' : 'light');
+  });
+</script>
+
+</body>
+</html>

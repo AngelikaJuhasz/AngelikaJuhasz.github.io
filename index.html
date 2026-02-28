@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <!-- Security & crawler meta tags -->
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="index, follow, noai, noimageai">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tayla Silverwood — Game Design & PM</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  /* === LIGHT MODE (default) === */
+  :root {
+    --cream: #f9f4ec;
+    --cream-dark: #f0e8d8;
+    --green-deep: #3a5c3a;
+    --green-mid: #5a8a5a;
+    --green-light: #a8c8a0;
+    --green-pale: #d4e8cc;
+    --gold: #c8a84b;
+    --gold-light: #e8d4a0;
+    --brown-soft: #8c6b3a;
+    --text-dark: #2a2a20;
+    --text-mid: #5a5a48;
+    --text-light: #8a8a70;
+    --nav-bg: rgba(249, 244, 236, 0.85);
+    --card-bg: #ffffff;
+    --section-alt: #f0e8d8;
+  }
+
+  /* === DARK MODE — mossy midnight === */
+  :root.dark {
+    --cream: #141914;
+    --cream-dark: #1c231c;
+    --green-deep: #90d090;
+    --green-mid: #68b068;
+    --green-light: #4a8a4a;
+    --green-pale: #1a2e1a;
+    --gold: #e0b84e;
+    --gold-light: #3a3010;
+    --brown-soft: #d4b07a;
+    --text-dark: #eef6ee;
+    --text-mid: #b8d0b0;
+    --text-light: #708870;
+    --nav-bg: rgba(14, 20, 14, 0.92);
+    --card-bg: #1a2a1a;
+    --section-alt: #1c231c;
+  }
+
+
+  /* === EXPLICIT LIGHT OVERRIDE (beats media query when user toggles) === */
+  :root.light {
+    --cream: #f9f4ec;
+    --cream-dark: #f0e8d8;
+    --green-deep: #3a5c3a;
+    --green-mid: #5a8a5a;
+    --green-light: #a8c8a0;
+    --green-pale: #d4e8cc;
+    --gold: #c8a84b;
+    --gold-light: #e8d4a0;
+    --brown-soft: #8c6b3a;
+    --text-dark: #2a2a20;
+    --text-mid: #5a5a48;
+    --text-light: #8a8a70;
+    --nav-bg: rgba(249, 244, 236, 0.85);
+    --card-bg: #ffffff;
+    --section-alt: #f0e8d8;
+  }
+  /* === SYSTEM PREFERENCE (when no manual override) === */
+  @media (prefers-color-scheme: dark) {
+    :root:not(.light):not(.dark) {
+      --cream: #141914;
+      --cream-dark: #1c231c;
+      --green-deep: #90d090;
+      --green-mid: #68b068;
+      --green-light: #4a8a4a;
+      --green-pale: #1a2e1a;
+      --gold: #e0b84e;
+      --gold-light: #3a3010;
+      --brown-soft: #d4b07a;
+      --text-dark: #eef6ee;
+      --text-mid: #b8d0b0;
+      --text-light: #708870;
+      --nav-bg: rgba(14, 20, 14, 0.92);
+      --card-bg: #1a2a1a;
+      --section-alt: #1c231c;
+    }
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--text-dark);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* === NOISE TEXTURE OVERLAY === */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.5;
+  }
+
+  /* === NAV === */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.4rem 4rem;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(90, 138, 90, 0.15);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--green-deep);
+    letter-spacing: 0.02em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2.5rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--text-mid);
+    text-decoration: none;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -3px; left: 0;
+    width: 0; height: 1.5px;
+    background: var(--green-mid);
+    transition: width 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--green-deep); }
+  .nav-links a:hover::after { width: 100%; }
+
+  /* === HERO === */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8rem 4rem 4rem 5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    background: var(--green-pale);
+    padding: 0.4rem 0.9rem;
+    border-radius: 20px;
+    margin-bottom: 2rem;
+    width: fit-content;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 5vw, 5.5rem);
+    line-height: 1.05;
+    color: var(--green-deep);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 0.8s 0.15s ease both;
+  }
+
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-desc {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--text-mid);
+    max-width: 42ch;
+    margin-bottom: 3rem;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    animation: fadeUp 0.8s 0.45s ease both;
+  }
+
+  .btn-primary {
+    background: var(--green-deep);
+    color: var(--cream);
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    transition: all 0.3s ease;
+    border: 2px solid var(--green-deep);
+  }
+
+  .btn-primary:hover {
+    background: transparent;
+    color: var(--green-deep);
+    transform: translateY(-2px);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--green-deep);
+    padding: 0.85rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    letter-spacing: 0.03em;
+    transition: all 0.3s ease;
+    border: 2px solid var(--green-light);
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--green-deep);
+    transform: translateY(-2px);
+  }
+
+  /* === HERO RIGHT ILLUSTRATION === */
+  .hero-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-illustration {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    inset: 0;
+  }
+
+  /* Floating botanical shapes */
+  .leaf {
+    position: absolute;
+    border-radius: 50% 0 50% 0;
+    opacity: 0.7;
+  }
+
+  .blob {
+    position: absolute;
+    border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+  }
+
+  .hero-portrait-ring {
+    width: 320px;
+    height: 320px;
+    border-radius: 50% 40% 50% 40%;
+    background: linear-gradient(135deg, var(--green-pale), var(--gold-light));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+    animation: float 6s ease-in-out infinite, fadeIn 1s 0.5s ease both;
+    box-shadow: 0 30px 80px rgba(58, 92, 58, 0.15);
+  }
+
+  .hero-portrait-inner {
+    width: 280px;
+    height: 280px;
+    border-radius: 50% 40% 50% 40%;
+    background: linear-gradient(160deg, var(--green-light) 0%, var(--green-pale) 50%, var(--gold-light) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    color: var(--green-deep);
+    overflow: hidden;
+  }
+
+  /* Decorative circles */
+  .deco-circle {
+    position: absolute;
+    border-radius: 50%;
+    border: 2px dashed;
+    animation: spin 20s linear infinite;
+  }
+
+  .deco-circle-1 {
+    width: 420px; height: 420px;
+    border-color: rgba(90, 138, 90, 0.2);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .deco-circle-2 {
+    width: 500px; height: 500px;
+    border-color: rgba(200, 168, 75, 0.15);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation-direction: reverse;
+    animation-duration: 30s;
+  }
+
+  /* Scattered leaves */
+  .leaf-1 { width: 60px; height: 90px; background: var(--green-mid); top: 15%; left: 10%; transform: rotate(30deg); animation: sway 4s ease-in-out infinite; }
+  .leaf-2 { width: 40px; height: 60px; background: var(--green-light); top: 70%; right: 15%; transform: rotate(-20deg); animation: sway 5s 1s ease-in-out infinite; }
+  .leaf-3 { width: 30px; height: 50px; background: var(--gold); top: 20%; right: 10%; transform: rotate(50deg); animation: sway 3.5s 0.5s ease-in-out infinite; opacity: 0.6; }
+  .leaf-4 { width: 50px; height: 75px; background: var(--green-deep); bottom: 20%; left: 15%; transform: rotate(-40deg); animation: sway 4.5s 1.5s ease-in-out infinite; opacity: 0.5; }
+
+  .blob-1 { width: 200px; height: 200px; background: rgba(168, 200, 160, 0.3); top: 5%; right: 5%; animation: morph 8s ease-in-out infinite; }
+  .blob-2 { width: 150px; height: 150px; background: rgba(200, 168, 75, 0.2); bottom: 10%; left: 5%; animation: morph 6s 2s ease-in-out infinite; }
+
+  /* === SCROLL HINT === */
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-light);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    animation: fadeIn 1s 1s ease both;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--green-mid), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  /* === SECTION SHARED === */
+  section {
+    padding: 7rem 5rem;
+    position: relative;
+  }
+
+  .section-label {
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--green-mid);
+    margin-bottom: 0.75rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 3.5vw, 3rem);
+    color: var(--green-deep);
+    margin-bottom: 3rem;
+    line-height: 1.2;
+  }
+
+  /* === ABOUT === */
+  #about {
+    background: var(--cream-dark);
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 6rem;
+    align-items: center;
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-card {
+    background: linear-gradient(135deg, var(--green-pale), var(--gold-light));
+    border-radius: 24px 8px 24px 8px;
+    padding: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .about-card::before {
+    content: '"';
+    font-family: 'Playfair Display', serif;
+    font-size: 12rem;
+    color: rgba(90, 138, 90, 0.12);
+    position: absolute;
+    top: -2rem;
+    left: 1rem;
+    line-height: 1;
+  }
+
+  .about-card-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-style: italic;
+    color: var(--green-deep);
+    line-height: 1.7;
+    position: relative;
+    z-index: 1;
+  }
+
+  .about-card-sub {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    font-style: normal;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .about-stats {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+  }
+
+  .stat {
+    text-align: center;
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1rem 1.5rem;
+    flex: 1;
+    box-shadow: 0 4px 20px rgba(58, 92, 58, 0.08);
+  }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+    color: var(--green-deep);
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-size: 0.75rem;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 0.25rem;
+  }
+
+  .about-text p {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--text-mid);
+    margin-bottom: 1.5rem;
+  }
+
+  .about-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin-top: 2rem;
+  }
+
+  .tag {
+    background: var(--green-pale);
+    color: var(--green-deep);
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    border: 1px solid rgba(90, 138, 90, 0.2);
+  }
+
+  /* === PROJECTS === */
+  #projects {
+    background: linear-gradient(180deg, var(--cream-dark) 0%, var(--cream) 100%);
+  }
+
+  .projects-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 3rem;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 30px rgba(58, 92, 58, 0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .project-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 50px rgba(58, 92, 58, 0.16);
+  }
+
+  .project-card:first-child {
+    grid-column: span 2;
+  }
+
+  .project-thumb {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-thumb-1 { background: linear-gradient(135deg, #3a5c3a, #5a8a5a); }
+  .project-thumb-2 { background: linear-gradient(135deg, #c8a84b, #e8d4a0); }
+  .project-thumb-3 { background: linear-gradient(135deg, #a8c8a0, #d4e8cc); }
+
+  .project-thumb-pattern {
+    position: absolute;
+    inset: 0;
+    opacity: 0.15;
+    background-image: radial-gradient(circle, white 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .project-thumb-icon {
+    position: relative;
+    z-index: 1;
+    font-size: 3.5rem;
+  }
+
+  .project-body {
+    padding: 1.5rem;
+  }
+
+  .project-type {
+    font-size: 0.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--green-mid);
+    margin-bottom: 0.5rem;
+  }
+
+  .project-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    color: var(--text-dark);
+    margin-bottom: 0.75rem;
+  }
+
+  .project-desc {
+    font-size: 0.88rem;
+    line-height: 1.7;
+    color: var(--text-mid);
+  }
+
+  .project-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--cream-dark);
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .project-tag {
+    font-size: 0.72rem;
+    background: var(--cream);
+    color: var(--text-mid);
+    padding: 0.25rem 0.65rem;
+    border-radius: 20px;
+    border: 1px solid var(--cream-dark);
+  }
+
+  /* === CONTACT === */
+  #contact {
+    background: var(--green-deep);
+    color: var(--cream);
+    text-align: center;
+    padding: 7rem 5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #contact::before {
+    content: '';
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168, 200, 160, 0.1), transparent 70%);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  #contact .section-label { color: var(--green-light); }
+
+  #contact .section-title {
+    color: var(--cream);
+    margin-bottom: 1.5rem;
+  }
+
+  .contact-sub {
+    font-size: 1.05rem;
+    color: rgba(249, 244, 236, 0.7);
+    max-width: 48ch;
+    margin: 0 auto 3rem;
+    line-height: 1.8;
+  }
+
+  .contact-links {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+  }
+
+  .contact-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(249, 244, 236, 0.1);
+    color: var(--cream);
+    text-decoration: none;
+    padding: 0.85rem 1.75rem;
+    border-radius: 50px;
+    font-size: 0.9rem;
+    font-weight: 400;
+    border: 1px solid rgba(249, 244, 236, 0.2);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+  }
+
+  .contact-link:hover {
+    background: rgba(249, 244, 236, 0.18);
+    transform: translateY(-3px);
+    border-color: rgba(249, 244, 236, 0.4);
+  }
+
+  /* === FOOTER === */
+  footer {
+    background: #2a3d2a;
+    color: rgba(249, 244, 236, 0.4);
+    text-align: center;
+    padding: 1.5rem;
+    font-size: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+
+  /* === ANIMATIONS === */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    33% { transform: translateY(-12px) rotate(1deg); }
+    66% { transform: translateY(-6px) rotate(-1deg); }
+  }
+
+  @keyframes sway {
+    0%, 100% { transform: rotate(var(--r, 30deg)) translateX(0); }
+    50% { transform: rotate(calc(var(--r, 30deg) + 8deg)) translateX(5px); }
+  }
+
+  @keyframes morph {
+    0%, 100% { border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%; }
+    33% { border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%; }
+    66% { border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%; }
+  }
+
+  @keyframes spin {
+    from { transform: translate(-50%, -50%) rotate(0deg); }
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* === REVEAL ON SCROLL === */
+  .reveal {
+    opacity: 1;
+    transform: translateY(0);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  /* JS adds .js-ready to body first, then we hide elements for animation */
+  .js-ready .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  .js-ready .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* === RESPONSIVE === */
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 2rem; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 7rem 2rem 4rem; }
+    section { padding: 5rem 2rem; }
+    #about { grid-template-columns: 1fr; gap: 3rem; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .project-card:first-child { grid-column: span 1; }
+  }
+
+  /* === THEME TOGGLE === */
+  .theme-toggle {
+    background: var(--green-pale);
+    border: 1.5px solid rgba(90, 138, 90, 0.25);
+    border-radius: 50px;
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: all 0.2s ease;
+    font-family: 'DM Sans', sans-serif;
+    margin-left: 1rem;
+  }
+
+  .theme-toggle:hover {
+    background: var(--green-light);
+    color: var(--green-deep);
+    transform: scale(1.04);
+  }
+
+  .theme-toggle .icon { font-size: 1rem; transition: transform 0.4s ease; }
+  .theme-toggle:hover .icon { transform: rotate(20deg); }
+
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Tayla Silverwood</div>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#about">About</a></li>
+    <li><a href="documents.html">CV</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="theme-toggle" id="theme-btn" aria-label="Toggle dark mode">
+    <span class="icon" id="theme-icon">🌙</span>
+    <span id="theme-label">Dark</span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <span class="hero-tag">Game Design · Project Management</span>
+    <h1 class="hero-name">Tayla<br><em>Silverwood</em></h1>
+    <p class="hero-desc">
+      2nd year Game Design student with a passion for building worlds and the processes behind them. I bridge creative vision and team execution — helping dev teams ship the games they dream of.
+    </p>
+    <div class="hero-cta">
+      <a href="#projects" class="btn-primary">See My Work</a>
+      <a href="#contact" class="btn-secondary">Get in Touch</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="hero-illustration">
+      <div class="blob blob-1"></div>
+      <div class="blob blob-2"></div>
+      <div class="leaf leaf-1"></div>
+      <div class="leaf leaf-2"></div>
+      <div class="leaf leaf-3"></div>
+      <div class="leaf leaf-4"></div>
+    </div>
+    <div class="deco-circle deco-circle-1"></div>
+    <div class="deco-circle deco-circle-2"></div>
+    <div class="hero-portrait-ring">
+      <div class="hero-portrait-inner">🌿</div>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="projects-header reveal">
+    <div>
+      <p class="section-label">Selected Work</p>
+      <h2 class="section-title">Projects</h2>
+    </div>
+  </div>
+
+  <div class="projects-grid">
+    <div class="project-card reveal" onclick="location.href='projects/verdant.html'" style="cursor:pointer">
+      <div class="project-thumb project-thumb-1">
+        <div class="project-thumb-pattern"></div>
+        <span class="project-thumb-icon">🎮</span>
+      </div>
+      <div class="project-body">
+        <p class="project-type">Game Design · Solo Project</p>
+        <h3 class="project-name">Verdant — A Puzzle Platformer</h3>
+        <p class="project-desc">A short-form puzzle platformer built around plant growth mechanics. Designed, prototyped, and documented solo as part of a game design fundamentals course. Focused on intuitive level progression and tactile feedback.</p>
+      </div>
+      <div class="project-footer">
+        <span class="project-tag">Unity</span>
+        <span class="project-tag">Level Design</span>
+        <span class="project-tag">Prototyping</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal" onclick="location.href='projects/sprint-coordinator.html'" style="cursor:pointer">
+      <div class="project-thumb project-thumb-2">
+        <div class="project-thumb-pattern"></div>
+        <span class="project-thumb-icon">📋</span>
+      </div>
+      <div class="project-body">
+        <p class="project-type">Project Management · Team Lead</p>
+        <h3 class="project-name">Sprint Coordinator — Jam Team</h3>
+        <p class="project-desc">Led a 5-person team through a 48-hour game jam using agile sprints. Managed scope, facilitated standups, and ensured the team shipped a complete build on deadline.</p>
+      </div>
+      <div class="project-footer">
+        <span class="project-tag">Agile</span>
+        <span class="project-tag">Leadership</span>
+        <span class="project-tag">Scoping</span>
+      </div>
+    </div>
+
+    <div class="project-card reveal" onclick="location.href='projects/onboarding-study.html'" style="cursor:pointer">
+      <div class="project-thumb project-thumb-3">
+        <div class="project-thumb-pattern"></div>
+        <span class="project-thumb-icon">🗺️</span>
+      </div>
+      <div class="project-body">
+        <p class="project-type">UX · Research Project</p>
+        <h3 class="project-name">Onboarding Flow Study</h3>
+        <p class="project-desc">Analysed onboarding flows across 6 indie games, identifying patterns that reduce early player drop-off. Presented findings and redesign recommendations to class.</p>
+      </div>
+      <div class="project-footer">
+        <span class="project-tag">UX Research</span>
+        <span class="project-tag">Game Feel</span>
+        <span class="project-tag">Analysis</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-visual reveal">
+    <div class="about-card">
+      <p class="about-card-text">
+        "Good games aren't just designed — they're built by teams who understand each other."
+      </p>
+      <p class="about-card-sub">— What drives Tayla's work</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat">
+        <div class="stat-number">2nd</div>
+        <div class="stat-label">Year</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">UX</div>
+        <div class="stat-label">University</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">2×</div>
+        <div class="stat-label">Disciplines</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="about-text reveal">
+    <p class="section-label">Who I Am</p>
+    <h2 class="section-title">Designer, Collaborator,<br><em style="font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold);">Bridge-Builder</em></h2>
+    <p>
+      I'm Tayla — a second-year Game Design major with a minor in Project Management at UX University. My focus is on the intersection of creative game design and the systems that help teams actually build what they envision.
+    </p>
+    <p>
+      I believe the best games come from teams with clear communication and shared goals. My PM background means I don't just design — I help bring ideas through the whole journey from concept to completion.
+    </p>
+    <div class="about-tags">
+      <span class="tag">Game Design</span>
+      <span class="tag">Project Management</span>
+      <span class="tag">Team Collaboration</span>
+      <span class="tag">UX Thinking</span>
+      <span class="tag">Prototyping</span>
+      <span class="tag">Agile</span>
+    </div>
+  </div>
+</section>
+
+<!-- DOCUMENTS PEEK -->
+<section id="documents-peek" style="background: var(--cream-dark); padding: 4rem 5rem; text-align: center;">
+  <div class="reveal">
+    <p class="section-label">Credentials</p>
+    <h2 class="section-title" style="margin-bottom: 1rem;">Want the full picture?</h2>
+    <p style="color: var(--text-mid); font-size: 1.05rem; max-width: 44ch; margin: 0 auto 2.5rem; line-height: 1.8;">
+      My CV is available if you'd like to dig into the details — education, experience, and everything in between.
+    </p>
+    <a href="documents.html" class="btn-primary" style="display: inline-block;">View My CV →</a>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <p class="section-label">Let's Connect</p>
+  <h2 class="section-title">Want to work together<br>or just say hello?</h2>
+  <p class="contact-sub">I'm always open to new projects, collaborations, or conversations about game design and team dynamics.</p>
+  <div class="contact-links">
+    <a href="/cdn-cgi/l/email-protection#3541544c595475504d54584559501b565a58" class="contact-link">
+      <span>✉</span> <span class="__cf_email__" data-cfemail="ff8b9e86939ebf9a879e928f939ad19c9092">[email&#160;protected]</span>
+    </a>
+    <a href="#" class="contact-link">
+      <span>💼</span> LinkedIn
+    </a>
+    <a href="#" class="contact-link">
+      <span>🎮</span> itch.io
+    </a>
+  </div>
+</section>
+
+<footer>
+  © 2025 Tayla Silverwood · Built with care
+</footer>
+
+
+<script>
+  // === THEME SYSTEM ===
+  const root = document.documentElement;
+  const icon = document.getElementById('theme-icon');
+  const label = document.getElementById('theme-label');
+
+  function getSystemPref() {
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  }
+
+  function applyTheme(theme) {
+    root.classList.remove('dark', 'light');
+    root.classList.add(theme);
+    if (theme === 'dark') {
+      icon.textContent = '☀️';
+      label.textContent = 'Light';
+    } else {
+      icon.textContent = '🌙';
+      label.textContent = 'Dark';
+    }
+  }
+
+  // On load: use saved preference, fall back to system
+  const saved = localStorage.getItem('theme');
+  applyTheme(saved || getSystemPref());
+
+  document.getElementById('theme-btn').addEventListener('click', function() {
+    const next = root.classList.contains('dark') ? 'light' : 'dark';
+    localStorage.setItem('theme', next);
+    applyTheme(next);
+  });
+
+  // Listen for system preference changes (e.g. OS switches to dark at sunset)
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+    if (!localStorage.getItem('theme')) {
+      applyTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+
+  // Mark body so CSS animation kicks in only with JS
+  document.body.classList.add('js-ready');
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
+
+  reveals.forEach(el => observer.observe(el));
+
+  setTimeout(() => {
+    reveals.forEach(el => el.classList.add('visible'));
+  }, 1500);
+
+</script>
+</body>
+</html>
