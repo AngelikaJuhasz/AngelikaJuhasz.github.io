@@ -2,1031 +2,1009 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-  <!-- Security & crawler meta tags -->
-  <meta name="referrer" content="no-referrer">
-  <meta name="robots" content="index, follow, noai, noimageai">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tayla Silverwood — Game Design & PM</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>[YOUR NAME] // Game Producer & PM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
 <style>
-  /* === LIGHT MODE (default) === */
-  :root {
-    --cream: #f9f4ec;
-    --cream-dark: #f0e8d8;
-    --green-deep: #3a5c3a;
-    --green-mid: #5a8a5a;
-    --green-light: #a8c8a0;
-    --green-pale: #d4e8cc;
-    --gold: #c8a84b;
-    --gold-light: #e8d4a0;
-    --brown-soft: #8c6b3a;
-    --text-dark: #2a2a20;
-    --text-mid: #5a5a48;
-    --text-light: #8a8a70;
-    --nav-bg: rgba(249, 244, 236, 0.85);
-    --card-bg: #ffffff;
-    --section-alt: #f0e8d8;
-  }
-
-  /* === DARK MODE — mossy midnight === */
-  :root.dark {
-    --cream: #141914;
-    --cream-dark: #1c231c;
-    --green-deep: #90d090;
-    --green-mid: #68b068;
-    --green-light: #4a8a4a;
-    --green-pale: #1a2e1a;
-    --gold: #e0b84e;
-    --gold-light: #3a3010;
-    --brown-soft: #d4b07a;
-    --text-dark: #eef6ee;
-    --text-mid: #b8d0b0;
-    --text-light: #708870;
-    --nav-bg: rgba(14, 20, 14, 0.92);
-    --card-bg: #1a2a1a;
-    --section-alt: #1c231c;
-  }
-
-
-  /* === EXPLICIT LIGHT OVERRIDE (beats media query when user toggles) === */
-  :root.light {
-    --cream: #f9f4ec;
-    --cream-dark: #f0e8d8;
-    --green-deep: #3a5c3a;
-    --green-mid: #5a8a5a;
-    --green-light: #a8c8a0;
-    --green-pale: #d4e8cc;
-    --gold: #c8a84b;
-    --gold-light: #e8d4a0;
-    --brown-soft: #8c6b3a;
-    --text-dark: #2a2a20;
-    --text-mid: #5a5a48;
-    --text-light: #8a8a70;
-    --nav-bg: rgba(249, 244, 236, 0.85);
-    --card-bg: #ffffff;
-    --section-alt: #f0e8d8;
-  }
-  /* === SYSTEM PREFERENCE (when no manual override) === */
-  @media (prefers-color-scheme: dark) {
-    :root:not(.light):not(.dark) {
-      --cream: #141914;
-      --cream-dark: #1c231c;
-      --green-deep: #90d090;
-      --green-mid: #68b068;
-      --green-light: #4a8a4a;
-      --green-pale: #1a2e1a;
-      --gold: #e0b84e;
-      --gold-light: #3a3010;
-      --brown-soft: #d4b07a;
-      --text-dark: #eef6ee;
-      --text-mid: #b8d0b0;
-      --text-light: #708870;
-      --nav-bg: rgba(14, 20, 14, 0.92);
-      --card-bg: #1a2a1a;
-      --section-alt: #1c231c;
-    }
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--cream);
-    color: var(--text-dark);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 300;
-    overflow-x: hidden;
-  }
-
-  /* === NOISE TEXTURE OVERLAY === */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 1000;
-    opacity: 0.5;
-  }
-
-  /* === NAV === */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1.4rem 4rem;
-    background: var(--nav-bg);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(90, 138, 90, 0.15);
-  }
-
-  .nav-logo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
-    color: var(--green-deep);
-    letter-spacing: 0.02em;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    font-size: 0.85rem;
-    font-weight: 400;
-    color: var(--text-mid);
-    text-decoration: none;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-    position: relative;
-  }
-
-  .nav-links a::after {
-    content: '';
-    position: absolute;
-    bottom: -3px; left: 0;
-    width: 0; height: 1.5px;
-    background: var(--green-mid);
-    transition: width 0.3s ease;
-  }
-
-  .nav-links a:hover { color: var(--green-deep); }
-  .nav-links a:hover::after { width: 100%; }
-
-  /* === HERO === */
-  .hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-left {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    padding: 8rem 4rem 4rem 5rem;
-    position: relative;
-    z-index: 2;
-  }
-
-  .hero-tag {
-    display: inline-block;
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--green-mid);
-    background: var(--green-pale);
-    padding: 0.4rem 0.9rem;
-    border-radius: 20px;
-    margin-bottom: 2rem;
-    width: fit-content;
-    animation: fadeUp 0.8s ease both;
-  }
-
-  .hero-name {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(3rem, 5vw, 5.5rem);
-    line-height: 1.05;
-    color: var(--green-deep);
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.8s 0.15s ease both;
-  }
-
-  .hero-name em {
-    font-style: italic;
-    color: var(--gold);
-  }
-
-  .hero-desc {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: var(--text-mid);
-    max-width: 42ch;
-    margin-bottom: 3rem;
-    animation: fadeUp 0.8s 0.3s ease both;
-  }
-
-  .hero-cta {
-    display: flex;
-    gap: 1rem;
-    animation: fadeUp 0.8s 0.45s ease both;
-  }
-
-  .btn-primary {
-    background: var(--green-deep);
-    color: var(--cream);
-    padding: 0.85rem 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    transition: all 0.3s ease;
-    border: 2px solid var(--green-deep);
-  }
-
-  .btn-primary:hover {
-    background: transparent;
-    color: var(--green-deep);
-    transform: translateY(-2px);
-  }
-
-  .btn-secondary {
-    background: transparent;
-    color: var(--green-deep);
-    padding: 0.85rem 2rem;
-    border-radius: 50px;
-    text-decoration: none;
-    font-size: 0.9rem;
-    font-weight: 500;
-    letter-spacing: 0.03em;
-    transition: all 0.3s ease;
-    border: 2px solid var(--green-light);
-  }
-
-  .btn-secondary:hover {
-    border-color: var(--green-deep);
-    transform: translateY(-2px);
-  }
-
-  /* === HERO RIGHT ILLUSTRATION === */
-  .hero-right {
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .hero-illustration {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    inset: 0;
-  }
-
-  /* Floating botanical shapes */
-  .leaf {
-    position: absolute;
-    border-radius: 50% 0 50% 0;
-    opacity: 0.7;
-  }
-
-  .blob {
-    position: absolute;
-    border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
-  }
-
-  .hero-portrait-ring {
-    width: 320px;
-    height: 320px;
-    border-radius: 50% 40% 50% 40%;
-    background: linear-gradient(135deg, var(--green-pale), var(--gold-light));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    z-index: 2;
-    animation: float 6s ease-in-out infinite, fadeIn 1s 0.5s ease both;
-    box-shadow: 0 30px 80px rgba(58, 92, 58, 0.15);
-  }
-
-  .hero-portrait-inner {
-    width: 280px;
-    height: 280px;
-    border-radius: 50% 40% 50% 40%;
-    background: linear-gradient(160deg, var(--green-light) 0%, var(--green-pale) 50%, var(--gold-light) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 5rem;
-    color: var(--green-deep);
-    overflow: hidden;
-  }
-
-  /* Decorative circles */
-  .deco-circle {
-    position: absolute;
-    border-radius: 50%;
-    border: 2px dashed;
-    animation: spin 20s linear infinite;
-  }
-
-  .deco-circle-1 {
-    width: 420px; height: 420px;
-    border-color: rgba(90, 138, 90, 0.2);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  .deco-circle-2 {
-    width: 500px; height: 500px;
-    border-color: rgba(200, 168, 75, 0.15);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    animation-direction: reverse;
-    animation-duration: 30s;
-  }
-
-  /* Scattered leaves */
-  .leaf-1 { width: 60px; height: 90px; background: var(--green-mid); top: 15%; left: 10%; transform: rotate(30deg); animation: sway 4s ease-in-out infinite; }
-  .leaf-2 { width: 40px; height: 60px; background: var(--green-light); top: 70%; right: 15%; transform: rotate(-20deg); animation: sway 5s 1s ease-in-out infinite; }
-  .leaf-3 { width: 30px; height: 50px; background: var(--gold); top: 20%; right: 10%; transform: rotate(50deg); animation: sway 3.5s 0.5s ease-in-out infinite; opacity: 0.6; }
-  .leaf-4 { width: 50px; height: 75px; background: var(--green-deep); bottom: 20%; left: 15%; transform: rotate(-40deg); animation: sway 4.5s 1.5s ease-in-out infinite; opacity: 0.5; }
-
-  .blob-1 { width: 200px; height: 200px; background: rgba(168, 200, 160, 0.3); top: 5%; right: 5%; animation: morph 8s ease-in-out infinite; }
-  .blob-2 { width: 150px; height: 150px; background: rgba(200, 168, 75, 0.2); bottom: 10%; left: 5%; animation: morph 6s 2s ease-in-out infinite; }
-
-  /* === SCROLL HINT === */
-  .scroll-hint {
-    position: absolute;
-    bottom: 2.5rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--text-light);
-    font-size: 0.75rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    animation: fadeIn 1s 1s ease both;
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--green-mid), transparent);
-    animation: scrollPulse 2s ease-in-out infinite;
-  }
-
-  /* === SECTION SHARED === */
-  section {
-    padding: 7rem 5rem;
-    position: relative;
-  }
-
-  .section-label {
-    font-size: 0.75rem;
-    font-weight: 500;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--green-mid);
-    margin-bottom: 0.75rem;
-  }
-
-  .section-title {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 3.5vw, 3rem);
-    color: var(--green-deep);
-    margin-bottom: 3rem;
-    line-height: 1.2;
-  }
-
-  /* === ABOUT === */
-  #about {
-    background: var(--cream-dark);
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 6rem;
-    align-items: center;
-  }
-
-  .about-visual {
-    position: relative;
-  }
-
-  .about-card {
-    background: linear-gradient(135deg, var(--green-pale), var(--gold-light));
-    border-radius: 24px 8px 24px 8px;
-    padding: 3rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .about-card::before {
-    content: '"';
-    font-family: 'Playfair Display', serif;
-    font-size: 12rem;
-    color: rgba(90, 138, 90, 0.12);
-    position: absolute;
-    top: -2rem;
-    left: 1rem;
-    line-height: 1;
-  }
-
-  .about-card-text {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    font-style: italic;
-    color: var(--green-deep);
-    line-height: 1.7;
-    position: relative;
-    z-index: 1;
-  }
-
-  .about-card-sub {
-    margin-top: 1.5rem;
-    font-size: 0.85rem;
-    color: var(--text-mid);
-    font-style: normal;
-    font-family: 'DM Sans', sans-serif;
-  }
-
-  .about-stats {
-    display: flex;
-    gap: 2rem;
-    margin-top: 2rem;
-  }
-
-  .stat {
-    text-align: center;
-    background: var(--card-bg);
-    border-radius: 12px;
-    padding: 1rem 1.5rem;
-    flex: 1;
-    box-shadow: 0 4px 20px rgba(58, 92, 58, 0.08);
-  }
-
-  .stat-number {
-    font-family: 'Playfair Display', serif;
-    font-size: 2rem;
-    color: var(--green-deep);
-    font-weight: 700;
-  }
-
-  .stat-label {
-    font-size: 0.75rem;
-    color: var(--text-light);
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-top: 0.25rem;
-  }
-
-  .about-text p {
-    font-size: 1.05rem;
-    line-height: 1.9;
-    color: var(--text-mid);
-    margin-bottom: 1.5rem;
-  }
-
-  .about-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.6rem;
-    margin-top: 2rem;
-  }
-
-  .tag {
-    background: var(--green-pale);
-    color: var(--green-deep);
-    padding: 0.4rem 1rem;
-    border-radius: 20px;
-    font-size: 0.8rem;
-    font-weight: 500;
-    border: 1px solid rgba(90, 138, 90, 0.2);
-  }
-
-  /* === PROJECTS === */
-  #projects {
-    background: linear-gradient(180deg, var(--cream-dark) 0%, var(--cream) 100%);
-  }
-
-  .projects-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 3rem;
-  }
-
-  .projects-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .project-card {
-    background: var(--card-bg);
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 4px 30px rgba(58, 92, 58, 0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    cursor: pointer;
-  }
-
-  .project-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 50px rgba(58, 92, 58, 0.16);
-  }
-
-  .project-thumb {
-    height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 3rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .project-thumb-1 { background: linear-gradient(135deg, #3a5c3a, #5a8a5a); }
-  .project-thumb-2 { background: linear-gradient(135deg, #c8a84b, #e8d4a0); }
-  .project-thumb-3 { background: linear-gradient(135deg, #a8c8a0, #d4e8cc); }
-
-  .project-thumb-pattern {
-    position: absolute;
-    inset: 0;
-    opacity: 0.15;
-    background-image: radial-gradient(circle, white 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
-
-  .project-thumb-icon {
-    position: relative;
-    z-index: 1;
-    font-size: 3.5rem;
-  }
-
-  .project-body {
-    padding: 1.5rem;
-  }
-
-  .project-type {
-    font-size: 0.7rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: var(--green-mid);
-    margin-bottom: 0.5rem;
-  }
-
-  .project-name {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.25rem;
-    color: var(--text-dark);
-    margin-bottom: 0.75rem;
-  }
-
-  .project-desc {
-    font-size: 0.88rem;
-    line-height: 1.7;
-    color: var(--text-mid);
-  }
-
-  .project-footer {
-    padding: 1rem 1.5rem;
-    border-top: 1px solid var(--cream-dark);
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-  }
-
-  .project-tag {
-    font-size: 0.72rem;
-    background: var(--cream);
-    color: var(--text-mid);
-    padding: 0.25rem 0.65rem;
-    border-radius: 20px;
-    border: 1px solid var(--cream-dark);
-  }
-
-  /* === CONTACT === */
-  #contact {
-    background: var(--green-deep);
-    color: var(--cream);
-    text-align: center;
-    padding: 7rem 5rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  #contact::before {
-    content: '';
-    position: absolute;
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(168, 200, 160, 0.1), transparent 70%);
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-  }
-
-  #contact .section-label { color: var(--green-light); }
-
-  #contact .section-title {
-    color: var(--cream);
-    margin-bottom: 1.5rem;
-  }
-
-  .contact-sub {
-    font-size: 1.05rem;
-    color: rgba(249, 244, 236, 0.7);
-    max-width: 48ch;
-    margin: 0 auto 3rem;
-    line-height: 1.8;
-  }
-
-  .contact-links {
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
-    flex-wrap: wrap;
-    position: relative;
-    z-index: 1;
-  }
-
-  .contact-link {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    background: rgba(249, 244, 236, 0.1);
-    color: var(--cream);
-    text-decoration: none;
-    padding: 0.85rem 1.75rem;
-    border-radius: 50px;
-    font-size: 0.9rem;
-    font-weight: 400;
-    border: 1px solid rgba(249, 244, 236, 0.2);
-    transition: all 0.3s ease;
-    backdrop-filter: blur(8px);
-  }
-
-  .contact-link:hover {
-    background: rgba(249, 244, 236, 0.18);
-    transform: translateY(-3px);
-    border-color: rgba(249, 244, 236, 0.4);
-  }
-
-  /* === FOOTER === */
-  footer {
-    background: #2a3d2a;
-    color: rgba(249, 244, 236, 0.4);
-    text-align: center;
-    padding: 1.5rem;
-    font-size: 0.8rem;
-    letter-spacing: 0.05em;
-  }
-
-  /* === ANIMATIONS === */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    33% { transform: translateY(-12px) rotate(1deg); }
-    66% { transform: translateY(-6px) rotate(-1deg); }
-  }
-
-  @keyframes sway {
-    0%, 100% { transform: rotate(var(--r, 30deg)) translateX(0); }
-    50% { transform: rotate(calc(var(--r, 30deg) + 8deg)) translateX(5px); }
-  }
-
-  @keyframes morph {
-    0%, 100% { border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%; }
-    33% { border-radius: 40% 60% 60% 40% / 60% 40% 60% 40%; }
-    66% { border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%; }
-  }
-
-  @keyframes spin {
-    from { transform: translate(-50%, -50%) rotate(0deg); }
-    to { transform: translate(-50%, -50%) rotate(360deg); }
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.4; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(1.2); }
-  }
-
-  /* === REVEAL ON SCROLL === */
-  .reveal {
-    opacity: 1;
-    transform: translateY(0);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  /* JS adds .js-ready to body first, then we hide elements for animation */
-  .js-ready .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  .js-ready .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* === RESPONSIVE === */
-  @media (max-width: 900px) {
-    nav { padding: 1.2rem 2rem; }
-    .hero { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
-    .hero-left { padding: 7rem 2rem 4rem; }
-    section { padding: 5rem 2rem; }
-    #about { grid-template-columns: 1fr; gap: 3rem; }
-    .projects-grid { grid-template-columns: 1fr; }
-  }
-
-  /* === THEME TOGGLE === */
-  .theme-toggle {
-    background: var(--green-pale);
-    border: 1.5px solid rgba(90, 138, 90, 0.25);
-    border-radius: 50px;
-    padding: 0.4rem 0.9rem;
-    cursor: pointer;
-    font-size: 0.85rem;
-    color: var(--text-mid);
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    transition: all 0.2s ease;
-    font-family: 'DM Sans', sans-serif;
-    margin-left: 1rem;
-  }
-
-  .theme-toggle:hover {
-    background: var(--green-light);
-    color: var(--green-deep);
-    transform: scale(1.04);
-  }
-
-  .theme-toggle .icon { font-size: 1rem; transition: transform 0.4s ease; }
-  .theme-toggle:hover .icon { transform: rotate(20deg); }
-
+:root {
+  --amber: #FFB000;
+  --amber-text: #D4A855;
+  --amber-dim: #AA6800;
+  --amber-bright: #FFD060;
+  --amber-glow: rgba(255,176,0,0.08);
+  --amber-glow-strong: rgba(255,176,0,0.14);
+  --green: #39FF14;
+  --green-dim: rgba(57,255,20,0.6);
+  --cyan: #00E5FF;
+  --cyan-dim: rgba(0,229,255,0.15);
+  --navy: #050A18;
+  --navy-mid: #0A1628;
+  --navy-light: #0F2040;
+  --line: rgba(255,176,0,0.18);
+  --line-dim: rgba(255,176,0,0.09);
+  --scanline: rgba(0,0,0,0.13);
+  --gap: 9px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+
+body{
+  background:var(--navy);
+  font-family:'Share Tech Mono',monospace;
+  color:var(--amber);
+  min-height:100vh;
+  overflow-x:hidden;
+}
+
+#grain{position:fixed;inset:0;pointer-events:none;z-index:300;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity:0.045;}
+
+#scanlines{position:fixed;inset:0;pointer-events:none;z-index:299;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,var(--scanline) 3px,var(--scanline) 4px);}
+
+#grid-bg{position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:
+    linear-gradient(rgba(255,176,0,0.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,176,0,0.05) 1px,transparent 1px),
+    linear-gradient(rgba(255,176,0,0.09) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,176,0,0.09) 1px,transparent 1px);
+  background-size:24px 24px,24px 24px,120px 120px,120px 120px;}
+
+canvas#stars{position:fixed;inset:0;pointer-events:none;z-index:1;}
+
+/* ── BOOT ── */
+#boot{position:fixed;inset:0;z-index:500;background:var(--navy);
+  display:flex;flex-direction:column;justify-content:center;padding:4rem;
+  transition:opacity 0.5s;}
+.boot-line{font-size:13px;line-height:2.2;color:var(--amber);opacity:0;animation:bfade .05s forwards;}
+.boot-line.g{color:var(--green);}
+.boot-line.b{color:var(--amber-bright);font-size:15px;}
+@keyframes bfade{to{opacity:1;}}
+@keyframes blink{50%{opacity:0;}}
+.bcursor{display:inline-block;width:9px;height:14px;background:var(--green);
+  vertical-align:middle;margin-left:3px;animation:blink .7s step-end infinite;}
+
+/* ── MAIN ── */
+#main{position:relative;z-index:10;min-height:100vh;
+  padding:var(--gap);opacity:0;transition:opacity .6s;}
+
+/* ── BENTO ── */
+.bento{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:var(--gap);
+  max-width:1700px;
+  margin:0 auto;
+}
+
+/* ── TILE ── */
+.tile{
+  background:var(--navy-mid);
+  border:1px solid var(--line);
+  padding:1.1rem 1.25rem;
+  position:relative;
+  overflow:hidden;
+  opacity:0;transform:translateY(8px);
+  transition:opacity .5s,transform .5s,border-color .2s,box-shadow .2s;
+}
+.tile.vis{opacity:1;transform:none;}
+.tile::after{content:'';position:absolute;top:6px;right:6px;
+  width:8px;height:8px;border-top:1px solid var(--line);border-right:1px solid var(--line);pointer-events:none;}
+.tile::before{content:'';position:absolute;inset:0;
+  background:var(--amber-glow);opacity:0;transition:opacity .2s;pointer-events:none;}
+.tile:hover{border-color:var(--amber);box-shadow:0 0 32px rgba(255,176,0,0.07);}
+.tile:hover::before{opacity:0.5;}
+
+.tile-label{font-size:9px;letter-spacing:.22em;color:var(--amber-dim);
+  text-transform:uppercase;margin-bottom:.65rem;
+  display:flex;align-items:center;gap:.5rem;}
+.tile-label::after{content:'';flex:1;height:1px;background:var(--line-dim);}
+
+/* ── SPANS ── */
+.t-identity  {grid-column:span 3;}
+.t-bio       {grid-column:span 5;}
+.t-status    {grid-column:span 4;}
+.t-ticker    {grid-column:span 12;padding:0;}
+.t-projects  {grid-column:span 5;grid-row:span 3;}
+.t-skills    {grid-column:span 3;grid-row:span 3;}
+.t-ongoing   {grid-column:span 4;grid-row:span 3;}
+.t-contact   {grid-column:span 12;padding:0;}
+
+/* bio and status same height */
+.t-bio, .t-status { align-self: stretch; }
+
+/* ── IDENTITY ── */
+.id-sys{font-size:9px;letter-spacing:.2em;color:var(--amber-dim);margin-bottom:.3rem;text-transform:uppercase;}
+.id-name{font-family:'Orbitron',sans-serif;font-size:clamp(1.6rem,2.8vw,2.8rem);
+  font-weight:700;line-height:.95;color:var(--amber-bright);letter-spacing:.04em;
+  text-shadow:0 0 40px rgba(255,176,0,.25);margin-bottom:.4rem;}
+.id-role{font-size:11px;letter-spacing:.18em;color:var(--amber-dim);
+  text-transform:uppercase;line-height:1.7;margin-bottom:.5rem;}
+.id-div{height:1px;background:var(--line);margin:.55rem 0;}
+.id-badge{display:inline-flex;align-items:center;gap:6px;
+  font-size:9px;letter-spacing:.14em;
+  border:1px solid var(--green-dim);color:var(--green);padding:4px 10px;margin-bottom:.4rem;}
+.id-badge::before{content:'●';font-size:8px;animation:blink 1.2s step-end infinite;}
+.id-loc{font-size:10px;color:var(--amber-dim);letter-spacing:.12em;margin-top:.3rem;}
+.id-studies{font-size:10px;color:var(--amber-dim);letter-spacing:.1em;line-height:1.7;margin-top:.3rem;}
+.id-studies span{color:var(--amber);}
+
+/* ── BIO ── */
+.bio-prompt{color:var(--green);margin-right:.4rem;}
+.bio-text{font-size:14px;line-height:1.8;color:var(--amber-text);}
+.bio-cursor{display:inline-block;width:8px;height:14px;background:var(--green);
+  vertical-align:middle;animation:blink .7s step-end infinite;}
+.bio-roles{display:flex;gap:6px;flex-wrap:wrap;margin-top:.85rem;}
+.role-tag{font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+  border:1px solid var(--amber-dim);color:var(--amber-dim);padding:3px 8px;}
+.role-tag.hi{border-color:var(--amber-mid);color:var(--amber-text);}
+
+/* ── STATUS ── */
+.status-list{list-style:none;}
+.status-list li{display:flex;justify-content:space-between;align-items:center;
+  padding:.45rem 0;border-bottom:1px solid var(--line-dim);font-size:12px;}
+.status-list li:last-child{border-bottom:none;}
+.sl-k{color:var(--amber-dim);letter-spacing:.1em;font-size:11px;}
+.sl-v{color:var(--amber-text);}
+.sl-on{color:var(--green);}
+
+/* ── TICKER ── */
+.ticker-wrap{display:flex;align-items:center;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.ticker-lbl{flex-shrink:0;padding:.5rem 1.1rem;font-size:9px;letter-spacing:.2em;
+  color:var(--amber-dim);text-transform:uppercase;border-right:1px solid var(--line);background:var(--navy);}
+.ticker-scroll{overflow:hidden;flex:1;}
+.ticker-track{display:flex;white-space:nowrap;animation:ticker 40s linear infinite;}
+.ticker-track:hover{animation-play-state:paused;}
+.ticker-item{display:inline-flex;align-items:center;gap:.4rem;
+  padding:.5rem 1.6rem;font-size:10px;letter-spacing:.12em;
+  border-right:1px solid var(--line-dim);color:var(--amber-dim);}
+.ticker-item .tv{color:var(--amber-bright);}
+@keyframes ticker{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* ── PROJECTS ── */
+.proj-card{
+  border:1px solid var(--line);
+  padding:.85rem 1rem;
+  margin-bottom:8px;
+  transition:border-color .15s,background .15s,transform .15s;
+  position:relative;
+  cursor:pointer;
+}
+.proj-card:last-child{margin-bottom:0;}
+.proj-card:hover{border-color:var(--amber);background:rgba(15,32,64,0.9);transform:translateX(2px);}
+.proj-card:hover .proj-name{color:var(--amber-bright);}
+.proj-card .open-hint{
+  position:absolute;bottom:.6rem;right:.85rem;
+  font-size:9px;letter-spacing:.15em;color:var(--amber-dim);
+  opacity:0;transition:opacity .15s;text-transform:uppercase;
+}
+.proj-card:hover .open-hint{opacity:1;}
+
+.proj-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.75rem;margin-bottom:.4rem;}
+.proj-name{font-family:'Orbitron',sans-serif;font-size:.95rem;font-weight:700;
+  letter-spacing:.06em;color:var(--amber-bright);}
+.proj-type{font-size:9px;letter-spacing:.14em;color:var(--amber-dim);
+  text-transform:uppercase;margin-top:2px;}
+
+.badges{display:flex;gap:4px;align-items:center;flex-shrink:0;}
+.badge{width:22px;height:22px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:9px;font-weight:700;border:1px solid;position:relative;}
+.badge[title]:hover::after{
+  content:attr(title);position:absolute;bottom:26px;right:0;
+  background:var(--navy-mid);border:1px solid var(--line);
+  padding:3px 7px;font-size:9px;white-space:nowrap;letter-spacing:.08em;
+  color:var(--amber-bright);pointer-events:none;z-index:10;}
+.b-gold{background:rgba(255,215,0,.12);border-color:rgba(255,215,0,.6);color:#FFD700;}
+.b-silver{background:rgba(192,192,192,.1);border-color:rgba(192,192,192,.5);color:#C0C0C0;}
+.b-bronze{background:rgba(205,127,50,.12);border-color:rgba(205,127,50,.5);color:#CD7F32;}
+
+.proj-roles{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:.5rem;}
+.proj-role{font-size:9px;letter-spacing:.12em;border:1px solid var(--amber-dim);
+  color:var(--amber-dim);padding:2px 6px;text-transform:uppercase;}
+.proj-role.hi{border-color:var(--amber-mid);color:var(--amber);}
+
+.proj-desc{font-size:13px;color:var(--amber-text);line-height:1.65;margin-bottom:.6rem;}
+
+.proj-links{display:flex;gap:6px;flex-wrap:wrap;}
+.plink{
+  font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid rgba(0,229,255,0.4);
+  color:var(--cyan);
+  padding:4px 11px;
+  background:rgba(0,229,255,0.06);
+  cursor:pointer;
+  font-family:'Share Tech Mono',monospace;
+  transition:border-color .12s,color .12s,background .12s;
+}
+.plink:hover{
+  border-color:var(--cyan);
+  color:#fff;
+  background:rgba(0,229,255,0.14);
+}
+
+.proj-card.inactive{opacity:.65;}
+.proj-card.inactive .proj-name{color:var(--amber-mid);}
+
+/* ── SKILLS / TAG CLOUD ── */
+.tag-cloud-group{margin-bottom:1rem;}
+.tag-cloud-group:last-child{margin-bottom:0;}
+.tag-cloud-title{
+  font-size:8px;letter-spacing:.2em;color:var(--amber-dim);
+  text-transform:uppercase;margin-bottom:.55rem;
+  padding-bottom:.3rem;border-bottom:1px solid var(--line-dim);
+}
+.tag-cloud-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.skill-tag{
+  letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid;padding:4px 10px;
+  cursor:default;
+  transition:border-color .15s,color .15s,background .15s,transform .15s;
+  opacity:0;transform:translateY(6px);
+}
+.skill-tag.vis{opacity:1;transform:none;}
+.skill-tag:hover{transform:translateY(-2px);}
+
+.skill-tag.sz-lg{font-size:13px;border-color:var(--amber);color:var(--amber-bright);background:rgba(255,176,0,0.08);}
+.skill-tag.sz-lg:hover{background:rgba(255,176,0,0.15);border-color:var(--amber-bright);}
+
+.skill-tag.sz-md{font-size:11px;border-color:var(--amber-mid);color:var(--amber);}
+.skill-tag.sz-md:hover{border-color:var(--amber);background:rgba(255,176,0,0.06);}
+
+.skill-tag.sz-sm{font-size:10px;border-color:var(--amber-dim);color:var(--amber-text);}
+.skill-tag.sz-sm:hover{border-color:var(--amber-mid);color:var(--amber);}
+
+/* single-col skills for methods */
+.skills-single .skill-row{margin-bottom:.5rem;}
+
+/* ── ONGOING ── */
+.ongoing-item{
+  padding:.75rem .8rem;
+  border:1px solid var(--line-dim);
+  border-left:2px solid transparent;
+  background:rgba(10,22,40,0.8);
+  margin-bottom:6px;
+  cursor:pointer;
+  position:relative;
+  transition:border-left-color .15s,border-color .15s,background .15s;
+}
+.ongoing-item:last-child{margin-bottom:0;}
+.ongoing-item:hover{border-left-color:var(--cyan);border-color:rgba(0,229,255,0.3);background:rgba(0,229,255,0.04);}
+.ongoing-item .open-hint{
+  position:absolute;bottom:.5rem;right:.7rem;
+  font-size:8px;letter-spacing:.15em;color:var(--amber-dim);
+  opacity:0;transition:opacity .15s;text-transform:uppercase;
+}
+.ongoing-item:hover .open-hint{opacity:1;}
+.ong-head{display:flex;align-items:flex-start;justify-content:space-between;gap:.5rem;margin-bottom:.2rem;}
+.ong-name{font-size:12px;letter-spacing:.1em;color:var(--amber-bright);
+  text-transform:uppercase;font-weight:500;}
+.ong-role{font-size:10px;letter-spacing:.12em;color:var(--amber-mid);margin-bottom:.35rem;}
+.ong-desc{font-size:12px;color:var(--amber-text);line-height:1.55;}
+.ong-badge{display:inline-block;font-size:7px;letter-spacing:.14em;
+  border:1px solid var(--cyan-dim);color:var(--cyan);
+  padding:2px 6px;margin-top:.4rem;text-transform:uppercase;flex-shrink:0;}
+.ong-badge.active{border-color:rgba(57,255,20,.3);color:var(--green);}
+
+/* ongoing tile accent */
+.t-ongoing .tile-label{color:var(--cyan);}
+.t-ongoing{border-color:rgba(0,229,255,0.15);}
+
+/* ── CONTACT ── */
+.contact-inner{display:flex;align-items:center;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.contact-lbl{flex-shrink:0;padding:.85rem 1.2rem;font-size:8px;letter-spacing:.2em;
+  color:var(--amber-dim);text-transform:uppercase;
+  border-right:1px solid var(--line);background:var(--navy);white-space:nowrap;}
+.contact-btns{display:flex;flex:1;}
+.cbtn{flex:1;background:transparent;border:none;border-right:1px solid var(--line);
+  color:var(--amber-dim);font-family:'Share Tech Mono',monospace;
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  padding:.85rem .75rem;cursor:pointer;text-align:center;
+  transition:background .15s,color .15s;}
+.cbtn:last-child{border-right:none;}
+.cbtn:hover{background:var(--amber-glow-strong);color:var(--amber-bright);}
+
+/* ── FOOTER ── */
+.bento-footer{max-width:1700px;margin:var(--gap) auto 0;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;
+  font-size:8px;color:var(--amber-dim);letter-spacing:.15em;padding:0 2px var(--gap);}
+
+/* ── MODAL ── */
+#modal-backdrop{
+  position:fixed;inset:0;z-index:400;
+  background:rgba(2,5,14,0.85);
+  display:flex;align-items:center;justify-content:center;
+  padding:2rem;
+  opacity:0;pointer-events:none;
+  transition:opacity .25s;
+}
+#modal-backdrop.open{opacity:1;pointer-events:all;}
+
+.modal-box{
+  background:var(--navy-mid);
+  border:1px solid var(--amber);
+  box-shadow:0 0 60px rgba(255,176,0,0.12), 0 0 0 1px rgba(255,176,0,0.05);
+  max-width:660px;width:100%;
+  max-height:85vh;overflow-y:auto;
+  position:relative;
+  transform:translateY(12px);
+  transition:transform .25s;
+}
+#modal-backdrop.open .modal-box{transform:none;}
+
+.modal-corner-tl,.modal-corner-tr,.modal-corner-bl,.modal-corner-br{
+  position:absolute;width:12px;height:12px;pointer-events:none;
+}
+.modal-corner-tl{top:6px;left:6px;border-top:1px solid var(--amber-dim);border-left:1px solid var(--amber-dim);}
+.modal-corner-tr{top:6px;right:6px;border-top:1px solid var(--amber-dim);border-right:1px solid var(--amber-dim);}
+.modal-corner-bl{bottom:6px;left:6px;border-bottom:1px solid var(--amber-dim);border-left:1px solid var(--amber-dim);}
+.modal-corner-br{bottom:6px;right:6px;border-bottom:1px solid var(--amber-dim);border-right:1px solid var(--amber-dim);}
+
+.modal-header{
+  padding:1.2rem 1.4rem .9rem;
+  border-bottom:1px solid var(--line);
+  display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;
+}
+.modal-title{font-family:'Orbitron',sans-serif;font-size:1.1rem;font-weight:700;
+  color:var(--amber-bright);letter-spacing:.06em;}
+.modal-subtitle{font-size:9px;letter-spacing:.18em;color:var(--amber-dim);
+  text-transform:uppercase;margin-top:4px;}
+.modal-close{background:transparent;border:1px solid var(--amber-dim);color:var(--amber-dim);
+  font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:.12em;
+  padding:4px 10px;cursor:pointer;flex-shrink:0;
+  transition:border-color .12s,color .12s;}
+.modal-close:hover{border-color:var(--amber);color:var(--amber);}
+
+.modal-body{padding:1.2rem 1.4rem;}
+
+.modal-badges{display:flex;gap:6px;margin-bottom:1rem;}
+
+.modal-section{margin-bottom:1rem;}
+.modal-section-title{font-size:8px;letter-spacing:.2em;color:var(--amber-dim);
+  text-transform:uppercase;margin-bottom:.5rem;padding-bottom:.3rem;
+  border-bottom:1px solid var(--line-dim);}
+.modal-desc{font-size:13px;color:var(--amber-text);line-height:1.75;}
+
+.modal-roles{display:flex;gap:5px;flex-wrap:wrap;}
+.modal-role{font-size:9px;letter-spacing:.12em;border:1px solid var(--amber-dim);
+  color:var(--amber-dim);padding:3px 8px;text-transform:uppercase;}
+.modal-role.hi{border-color:var(--amber-mid);color:var(--amber);}
+
+.modal-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--line-dim);}
+.modal-link{font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  border:1px solid rgba(0,229,255,0.4);color:var(--cyan);
+  padding:5px 14px;background:rgba(0,229,255,0.06);cursor:pointer;
+  font-family:'Share Tech Mono',monospace;
+  transition:border-color .12s,color .12s,background .12s;}
+.modal-link:hover{border-color:var(--cyan);color:#fff;background:rgba(0,229,255,0.14);}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1200px){
+  .t-identity{grid-column:span 4;}
+  .t-bio{grid-column:span 8;}
+  .t-status{grid-column:span 4;}
+  .t-projects{grid-column:span 8;}
+  .t-skills{grid-column:span 4;}
+  .t-ongoing{grid-column:span 4;grid-row:span 1;}
+  .skills-cols{grid-template-columns:1fr;}
+}
+@media(max-width:768px){
+  .t-identity,.t-bio,.t-status,.t-projects,.t-skills,.t-ongoing{grid-column:span 12;grid-row:span 1;}
+  .cbtn{flex:none;width:50%;}
+  .contact-btns{flex-wrap:wrap;}
+}
 </style>
 </head>
 <body>
 
-<!-- NAV -->
-<nav>
-  <div class="nav-logo">Tayla Silverwood</div>
-  <ul class="nav-links">
-    <li><a href="#projects">Projects</a></li>
-    <li><a href="#about">About</a></li>
-    <li><a href="documents.html">CV</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <button class="theme-toggle" id="theme-btn" aria-label="Toggle dark mode">
-    <span class="icon" id="theme-icon">🌙</span>
-    <span id="theme-label">Dark</span>
-  </button>
-</nav>
+<div id="grain"></div>
+<div id="scanlines"></div>
+<div id="grid-bg"></div>
+<canvas id="stars"></canvas>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <span class="hero-tag">Game Design · Project Management</span>
-    <h1 class="hero-name">Tayla<br><em>Silverwood</em></h1>
-    <p class="hero-desc">
-      2nd year Game Design student with a passion for building worlds and the processes behind them. I bridge creative vision and team execution — helping dev teams ship the games they dream of.
-    </p>
-    <div class="hero-cta">
-      <a href="#projects" class="btn-primary">See My Work</a>
-      <a href="#contact" class="btn-secondary">Get in Touch</a>
+<!-- BOOT -->
+<div id="boot"><div id="boot-lines"></div></div>
+
+<!-- MAIN -->
+<div id="main">
+<div class="bento">
+
+  <!-- IDENTITY -->
+  <div class="tile t-identity" data-ti="0">
+    <div class="id-sys">Portfolio // Build 2026</div>
+    <div class="id-name">[YOUR<br>NAME]</div>
+    <div class="id-role">Game Producer &amp; PM</div>
+    <div class="id-badge">AVAILABLE FOR WORK</div>
+    <div class="id-div"></div>
+    <div class="id-studies">
+      <div style="margin-bottom:.3rem;font-size:8px;letter-spacing:.18em;color:var(--amber-dim);text-transform:uppercase;">Education</div>
+      <span>Uppsala University / Gotland</span><br>
+      <span style="color:var(--amber-dim);">Game Design &amp; Technology</span>
     </div>
+    <div class="id-div"></div>
+    <div class="id-loc">📍 Gotland, Sweden</div>
   </div>
 
-  <div class="hero-right">
-    <div class="hero-illustration">
-      <div class="blob blob-1"></div>
-      <div class="blob blob-2"></div>
-      <div class="leaf leaf-1"></div>
-      <div class="leaf leaf-2"></div>
-      <div class="leaf leaf-3"></div>
-      <div class="leaf leaf-4"></div>
-    </div>
-    <div class="deco-circle deco-circle-1"></div>
-    <div class="deco-circle deco-circle-2"></div>
-    <div class="hero-portrait-ring">
-      <div class="hero-portrait-inner">🌿</div>
-    </div>
-  </div>
-
-  <div class="scroll-hint">
-    <span>Scroll</span>
-    <div class="scroll-line"></div>
-  </div>
-</section>
-
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="projects-header reveal">
+  <!-- BIO -->
+  <div class="tile t-bio" data-ti="1">
+    <div class="tile-label">Profile</div>
     <div>
-      <p class="section-label">Selected Work</p>
-      <h2 class="section-title">Projects</h2>
+      <span class="bio-prompt">&gt;_</span>
+      <span class="bio-text" id="bio-typed"></span><span class="bio-cursor" id="bio-cursor"></span>
+    </div>
+    <div class="bio-roles" id="bio-roles"></div>
+  </div>
+
+  <!-- STATUS -->
+  <div class="tile t-status" data-ti="2">
+    <div class="tile-label">System Status</div>
+    <ul class="status-list">
+      <li><span class="sl-k">AVAILABILITY</span><span class="sl-v sl-on">OPEN TO WORK</span></li>
+      <li><span class="sl-k">LOCATION</span><span class="sl-v">Gotland, SE</span></li>
+      <li><span class="sl-k">UNIVERSITY</span><span class="sl-v">Uppsala / Gotland</span></li>
+      <li><span class="sl-k">CLOCK</span><span class="sl-v" id="clock">--:--:--</span></li>
+      <li><span class="sl-k">COMMUNITY HUB</span><span class="sl-v sl-on">ACTIVE</span></li>
+      <li><span class="sl-k">PROJECTS ACTIVE</span><span class="sl-v">3</span></li>
+      <li><span class="sl-k">CLEARANCE</span><span class="sl-v">PRODUCER</span></li>
+    </ul>
+  </div>
+
+  <!-- TICKER -->
+  <div class="tile t-ticker" data-ti="3">
+    <div class="ticker-wrap">
+      <div class="ticker-lbl">Live Feed</div>
+      <div class="ticker-scroll"><div class="ticker-track" id="ticker"></div></div>
     </div>
   </div>
 
-  <div class="projects-grid">
-    <div class="project-card reveal" onclick="location.href='projects/verdant.html'" style="cursor:pointer">
-      <div class="project-thumb project-thumb-1">
-        <div class="project-thumb-pattern"></div>
-        <span class="project-thumb-icon">🎮</span>
+  <!-- PROJECTS -->
+  <div class="tile t-projects" data-ti="4">
+    <div class="tile-label">Project Log</div>
+
+    <!-- Library Bus -->
+    <div class="proj-card">
+      <div class="proj-head">
+        <div>
+          <div class="proj-name">LIBRARY BUS</div>
+          <div class="proj-type">Uni Arcade Game · PM &amp; Producer</div>
+        </div>
+        <div class="badges">
+          <div class="badge b-gold" title="Best in Show">★</div>
+          <div class="badge b-silver" title="Best Design">✦</div>
+          <div class="badge b-bronze" title="Audience Choice">♦</div>
+        </div>
       </div>
-      <div class="project-body">
-        <p class="project-type">Game Design · Solo Project</p>
-        <h3 class="project-name">Verdant — A Puzzle Platformer</h3>
-        <p class="project-desc">A short-form puzzle platformer built around plant growth mechanics. Designed, prototyped, and documented solo as part of a game design fundamentals course. Focused on intuitive level progression and tactile feedback.</p>
+      <div class="proj-roles">
+        <span class="proj-role hi">Producer</span>
+        <span class="proj-role hi">Project Manager</span>
+        <span class="proj-role">SCRUM</span>
+        <span class="proj-role">Sprint Planning</span>
+        <span class="proj-role">Investor Relations</span>
+        <span class="proj-role">Exhibition</span>
       </div>
-      <div class="project-footer">
-        <span class="project-tag">Unity</span>
-        <span class="project-tag">Level Design</span>
-        <span class="project-tag">Prototyping</span>
+      <div class="proj-desc">Helped the PO bring their vision to life as Producer — creating roadmaps, schedules and meeting with investors. Handled SCRUM standups, sprint planning and exhibition applications including Gotland Game Conference. Recently invited by UU to attend events; coordinating game updates and logistics.</div>
+      <div class="proj-links">
+        <button class="plink" onclick="openLink('https://itch.io')">▶ Play on ITCH</button>
+        <button class="plink" onclick="openLink('https://itch.io')">⊞ GGC Game Blog</button>
       </div>
+      <span class="open-hint">↗ click to expand</span>
     </div>
 
-    <div class="project-card reveal" onclick="location.href='projects/sprint-coordinator.html'" style="cursor:pointer">
-      <div class="project-thumb project-thumb-2">
-        <div class="project-thumb-pattern"></div>
-        <span class="project-thumb-icon">📋</span>
+    <!-- AstroBun -->
+    <div class="proj-card">
+      <div class="proj-head">
+        <div>
+          <div class="proj-name">ASTROBUN</div>
+          <div class="proj-type">Uni 2D Shmup · PM &amp; Programmer</div>
+        </div>
+        <div class="badges"></div>
       </div>
-      <div class="project-body">
-        <p class="project-type">Project Management · Team Lead</p>
-        <h3 class="project-name">Sprint Coordinator — Jam Team</h3>
-        <p class="project-desc">Led a 5-person team through a 48-hour game jam using agile sprints. Managed scope, facilitated standups, and ensured the team shipped a complete build on deadline.</p>
+      <div class="proj-roles">
+        <span class="proj-role hi">Project Manager</span>
+        <span class="proj-role hi">Programmer</span>
+        <span class="proj-role">SCRUM</span>
+        <span class="proj-role">Jira</span>
+        <span class="proj-role">Procedural Gen</span>
+        <span class="proj-role">Onboarding Design</span>
       </div>
-      <div class="project-footer">
-        <span class="project-tag">Agile</span>
-        <span class="project-tag">Leadership</span>
-        <span class="project-tag">Scoping</span>
+      <div class="proj-desc">Managed scheduling, SCRUM ceremonies and Jira board as PM. On the programming side: procedural generation in Unity and onboarding system design &amp; implementation.</div>
+      <div class="proj-links">
+        <button class="plink" onclick="openLink('https://itch.io')">▶ Play on ITCH</button>
       </div>
+      <span class="open-hint">↗ click to expand</span>
     </div>
 
-    <div class="project-card reveal" onclick="location.href='projects/onboarding-study.html'" style="cursor:pointer">
-      <div class="project-thumb project-thumb-3">
-        <div class="project-thumb-pattern"></div>
-        <span class="project-thumb-icon">🗺️</span>
+    <!-- Haunted House -->
+    <div class="proj-card">
+      <div class="proj-head">
+        <div>
+          <div class="proj-name">HAUNTED HOUSE</div>
+          <div class="proj-type">Multiplayer Level · Unreal Engine 5</div>
+        </div>
       </div>
-      <div class="project-body">
-        <p class="project-type">UX · Research Project</p>
-        <h3 class="project-name">Onboarding Flow Study</h3>
-        <p class="project-desc">Analysed onboarding flows across 6 indie games, identifying patterns that reduce early player drop-off. Presented findings and redesign recommendations to class.</p>
+      <div class="proj-roles">
+        <span class="proj-role hi">Level Designer</span>
+        <span class="proj-role">Greyboxing</span>
+        <span class="proj-role">Whiteboxing</span>
+        <span class="proj-role">Lighting</span>
+        <span class="proj-role">Lyra Template</span>
       </div>
-      <div class="project-footer">
-        <span class="project-tag">UX Research</span>
-        <span class="project-tag">Game Feel</span>
-        <span class="project-tag">Analysis</span>
+      <div class="proj-desc">Multiplayer level built in Unreal Engine using the Lyra template. Responsible for greyboxing, whiteboxing and lighting alongside the team.</div>
+      <div class="proj-links">
+        <button class="plink" onclick="openLink('https://itch.io')">⊞ View Level</button>
       </div>
+      <span class="open-hint">↗ click to expand</span>
+    </div>
+
+  </div>
+
+  <!-- SKILLS -->
+  <div class="tile t-skills" data-ti="5">
+    <div class="tile-label">Skills &amp; Software</div>
+    <div id="tag-cloud"></div>
+  </div>
+
+  <!-- ONGOING -->
+  <div class="tile t-ongoing" data-ti="6">
+    <div class="tile-label">Ongoing</div>
+
+    <div class="ongoing-item" data-ong="0">
+      <div class="ong-head"><div class="ong-name">Library Bus</div><span class="ong-badge active">● Active</span></div>
+      <div class="ong-role">Producer · Event Coordinator</div>
+      <div class="ong-desc">Invited by UU to attend events. Coordinating game updates and logistics for each appearance.</div>
+      <span class="open-hint">↗ click to expand</span>
+    </div>
+
+    <div class="ongoing-item" data-ong="1">
+      <div class="ong-head"><div class="ong-name">Ship Escape</div><span class="ong-badge">● In Dev</span></div>
+      <div class="ong-role">Level Designer</div>
+      <div class="ong-desc">Parkour single-player level. Greyboxing, whiteboxing and lighting.</div>
+      <span class="open-hint">↗ click to expand</span>
+    </div>
+
+    <div class="ongoing-item" data-ong="2">
+      <div class="ong-head"><div class="ong-name">MoCap Project</div><span class="ong-badge">● In Dev</span></div>
+      <div class="ong-role">Assistant Director</div>
+      <div class="ong-desc">Student fighting game. Keeping strict schedule, coordinating staff and actors to offload the director.</div>
+      <span class="open-hint">↗ click to expand</span>
+    </div>
+
+    <div class="ongoing-item" data-ong="3">
+      <div class="ong-head"><div class="ong-name">UF Mentoring</div><span class="ong-badge active">● Active</span></div>
+      <div class="ong-role">Mentor</div>
+      <div class="ong-desc">Mentoring middle schoolers building a board game. Proud to be their point of help.</div>
+      <span class="open-hint">↗ click to expand</span>
+    </div>
+
+    <div class="ongoing-item" data-ong="4">
+      <div class="ong-head"><div class="ong-name">Gotland Game Hub</div><span class="ong-badge active">● Full-time</span></div>
+      <div class="ong-role">Community Manager</div>
+      <div class="ong-desc">Building student community, managing the space, coordinating guests and new initiatives.</div>
+      <span class="open-hint">↗ click to expand</span>
     </div>
   </div>
-</section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="about-visual reveal">
-    <div class="about-card">
-      <p class="about-card-text">
-        "Good games aren't just designed — they're built by teams who understand each other."
-      </p>
-      <p class="about-card-sub">— What drives Tayla's work</p>
-    </div>
-    <div class="about-stats">
-      <div class="stat">
-        <div class="stat-number">2nd</div>
-        <div class="stat-label">Year</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">UPPSALA</div>
-        <div class="stat-label">University</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">2×</div>
-        <div class="stat-label">Disciplines</div>
-      </div>
+  <!-- CONTACT -->
+  <div class="tile t-contact" data-ti="7">
+    <div class="contact-inner">
+      <div class="contact-lbl">Open Channel</div>
+      <div class="contact-btns" id="contact-btns"></div>
     </div>
   </div>
 
-  <div class="about-text reveal">
-    <p class="section-label">Who I Am</p>
-    <h2 class="section-title">Designer, Collaborator,<br><em style="font-family: 'Playfair Display', serif; font-style: italic; color: var(--gold);">Bridge-Builder</em></h2>
-    <p>
-      I'm Tayla — a second-year Game Design major with a minor in Project Management at Uppsala University. My focus is on the intersection of creative game design and the systems that help teams actually build what they envision.
-    </p>
-    <p>
-      I believe the best games come from teams with clear communication and shared goals. My PM background means I don't just design — I help bring ideas through the whole journey from concept to completion.
-    </p>
-    <div class="about-tags">
-        <span class="tag">Game Design</span>
-        <span class="tag">Level Design</span>
-        <span class="tag">Project Management</span>
-        <span class="tag">Agile Methodology</span>
-        <span class="tag">Community Management</span>
+</div><!-- /bento -->
+
+<div class="bento-footer">
+  <span>BUILD 2026 // GAME PRODUCER &amp; PM</span>
+  <span>GOTLAND, SWEDEN</span>
+  <span id="footer-clock">--:--:--</span>
+</div>
+</div><!-- /main -->
+
+<!-- MODAL -->
+<div id="modal-backdrop">
+  <div class="modal-box" id="modal-box">
+    <div class="modal-corner-tl"></div><div class="modal-corner-tr"></div>
+    <div class="modal-corner-bl"></div><div class="modal-corner-br"></div>
+    <div class="modal-header">
+      <div>
+        <div class="modal-title" id="modal-title"></div>
+        <div class="modal-subtitle" id="modal-subtitle"></div>
+      </div>
+      <button class="modal-close" id="modal-close">[ CLOSE ]</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-badges" id="modal-badges"></div>
+      <div class="modal-section">
+        <div class="modal-section-title">Responsibilities</div>
+        <div class="modal-roles" id="modal-roles"></div>
+      </div>
+      <div class="modal-section">
+        <div class="modal-section-title">About this project</div>
+        <div class="modal-desc" id="modal-desc"></div>
+      </div>
+      <div class="modal-links" id="modal-links"></div>
     </div>
   </div>
-</section>
-
-<!-- DOCUMENTS PEEK -->
-<section id="documents-peek" style="background: var(--cream-dark); padding: 4rem 5rem; text-align: center;">
-  <div class="reveal">
-    <p class="section-label">Credentials</p>
-    <h2 class="section-title" style="margin-bottom: 1rem;">Want the full picture?</h2>
-    <p style="color: var(--text-mid); font-size: 1.05rem; max-width: 44ch; margin: 0 auto 2.5rem; line-height: 1.8;">
-      My CV is available if you'd like to dig into the details — education, experience, and everything in between.
-    </p>
-    <a href="documents.html" class="btn-primary" style="display: inline-block;">View My CV →</a>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <p class="section-label">Let's Connect</p>
-  <h2 class="section-title">Want to work together<br>or just say hello?</h2>
-  <p class="contact-sub">I'm always open to new projects, collaborations, or conversations about game design and team dynamics.</p>
-  <div class="contact-links">
-    <a href="/cdn-cgi/l/email-protection#3541544c595475504d54584559501b565a58" class="contact-link">
-      <span>✉</span> <span class="__cf_email__" data-cfemail="ff8b9e86939ebf9a879e928f939ad19c9092">[email&#160;protected]</span>
-    </a>
-    <a href="https://www.linkedin.com/in/angelika-juh%C3%A1sz-67686630b/" class="contact-link">
-      <span>💼</span> LinkedIn
-    </a>
-    <a href="https://angelikajuhasz.itch.io/" class="contact-link">
-      <span>🎮</span> itch.io
-    </a>
-  </div>
-</section>
-
-<footer>
-  © 2025 Tayla Silverwood · Built with care
-</footer>
-
+</div>
 
 <script>
-  // === THEME SYSTEM ===
-  const root = document.documentElement;
-  const icon = document.getElementById('theme-icon');
-  const label = document.getElementById('theme-label');
+const BIO = "Game Producer and PM with hands-on experience across the full production pipeline — from sprint planning and investor meetings to procedural generation and level design. Passionate about bringing teams together, shipping games that land, and building communities that last.";
 
-  function getSystemPref() {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-  }
+const BIO_ROLES = [
+  {t:'Producer',hi:true},{t:'Project Manager',hi:true},{t:'Level Designer',hi:true},
+  {t:'Community Manager',hi:true},{t:'Programmer',hi:false},{t:'SCRUM',hi:false},
+];
 
-  function applyTheme(theme) {
-    root.classList.remove('dark', 'light');
-    root.classList.add(theme);
-    if (theme === 'dark') {
-      icon.textContent = '☀️';
-      label.textContent = 'Light';
-    } else {
-      icon.textContent = '🌙';
-      label.textContent = 'Dark';
-    }
-  }
+// sz: lg=core, md=confident, sm=familiar
+const TAG_GROUPS = [
+  {
+    title: 'Engines & Code',
+    tags: [
+      {t:'Unity',sz:'lg'},{t:'Unreal',sz:'lg'},{t:'C#',sz:'md'},
+      {t:'Godot',sz:'md'},{t:'GDScript',sz:'sm'},{t:'Blueprint',sz:'sm'},
+    ]
+  },
+  {
+    title: 'Production & PM',
+    tags: [
+      {t:'SCRUM',sz:'lg'},{t:'Jira',sz:'lg'},{t:'Kanban',sz:'lg'},
+      {t:'Waterfall',sz:'md'},{t:'Sprint Planning',sz:'md'},{t:'Roadmapping',sz:'md'},
+      {t:'Standups',sz:'sm'},{t:'Retrospectives',sz:'sm'},
+    ]
+  },
+  {
+    title: 'Tools',
+    tags: [
+      {t:'Git',sz:'lg'},{t:'Blender',sz:'md'},{t:'Figma',sz:'md'},{t:'GitHub',sz:'sm'},
+    ]
+  },
+  {
+    title: 'Soft Skills',
+    tags: [
+      {t:'Team Leadership',sz:'lg'},{t:'Community Building',sz:'lg'},
+      {t:'Event Coordination',sz:'md'},{t:'Mentoring',sz:'md'},
+      {t:'Investor Comms',sz:'sm'},{t:'Stakeholder Mgmt',sz:'sm'},
+    ]
+  },
+];
 
-  // On load: use saved preference, fall back to system
-  const saved = localStorage.getItem('theme');
-  applyTheme(saved || getSystemPref());
+const TICKER_ITEMS = [
+  {l:'PROJECTS SHIPPED',v:'4+'},{l:'AWARDS WON',v:'3'},
+  {l:'EXHIBITIONS ATTENDED',v:'GGC 2024'},{l:'TEAM SIZE MANAGED',v:'Up to 10'},
+  {l:'ENGINES',v:'Unity · Unreal · Godot'},{l:'COMMUNITY HUB',v:'ACTIVE'},
+  {l:'CURRENT ROLE',v:'Community Manager'},{l:'UF MENTOR',v:'Active'},
+  {l:'UNIVERSITY',v:'Uppsala / Gotland'},{l:'STATUS',v:'Open to Work'},
+];
 
-  document.getElementById('theme-btn').addEventListener('click', function() {
-    const next = root.classList.contains('dark') ? 'light' : 'dark';
-    localStorage.setItem('theme', next);
-    applyTheme(next);
-  });
+const CONTACTS = [
+  {l:'// EMAIL',u:'mailto:you@email.com'},
+  {l:'// LINKEDIN',u:'https://linkedin.com'},
+  {l:'// ITCH.IO',u:'https://itch.io'},
+  {l:'// GITHUB',u:'https://github.com'},
+  {l:'// CV / RESUME',u:'#'},
+];
 
-  // Listen for system preference changes (e.g. OS switches to dark at sunset)
-  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
-    if (!localStorage.getItem('theme')) {
-      applyTheme(e.matches ? 'dark' : 'light');
-    }
-  });
+const MODAL_DATA = [
+  {
+    title:'LIBRARY BUS',
+    subtitle:'Uni Arcade Game · PM & Producer',
+    badges:[
+      {cls:'b-gold',sym:'★',label:'Best in Show'},
+      {cls:'b-silver',sym:'✦',label:'Best Design'},
+      {cls:'b-bronze',sym:'♦',label:'Audience Choice'},
+    ],
+    roles:[
+      {t:'Producer',hi:true},{t:'Project Manager',hi:true},{t:'SCRUM Master',hi:false},
+      {t:'Sprint Planning',hi:false},{t:'Investor Relations',hi:false},{t:'Exhibition',hi:false},
+    ],
+    desc:`Library Bus is an arcade game developed as a university project. As Producer, my role was to help the PO bring their creative vision to life — building roadmaps, maintaining schedules, and coordinating meetings with investors and stakeholders.\n\nAs Project Manager, I owned the SCRUM process end-to-end: running daily standups, managing sprint planning, and handling exhibition applications. The project was shown at Gotland Game Conference and has since been invited by Uppsala University to attend further events, where I continue to coordinate game updates and logistics for each appearance.`,
+    links:[
+      {l:'▶ Play on ITCH',u:'https://itch.io'},
+      {l:'⊞ GGC Game Blog',u:'https://itch.io'},
+    ],
+  },
+  {
+    title:'ASTROBUN',
+    subtitle:'Uni 2D Shoot-\'em-up · PM & Programmer',
+    badges:[],
+    roles:[
+      {t:'Project Manager',hi:true},{t:'Programmer',hi:true},{t:'SCRUM',hi:false},
+      {t:'Jira',hi:false},{t:'Procedural Generation',hi:false},{t:'Onboarding Design',hi:false},
+    ],
+    desc:`AstroBun is a 2D shoot-\'em-up made in Unity during university. I wore two hats on this project.\n\nAs PM, I handled all scheduling, managed SCRUM ceremonies including standups and retrospectives, and kept the Jira board current so the team always knew their priorities.\n\nAs programmer, my main contributions were building the procedural generation system that drives enemy and level variety, and designing and implementing the player onboarding experience to help new players get up to speed quickly.`,
+    links:[
+      {l:'▶ Play on ITCH',u:'https://itch.io'},
+    ],
+  },
+  {
+    title:'HAUNTED HOUSE',
+    subtitle:'Multiplayer Level · Unreal Engine 5 / Lyra',
+    badges:[],
+    roles:[
+      {t:'Level Designer',hi:true},{t:'Greyboxing',hi:false},{t:'Whiteboxing',hi:false},
+      {t:'Lighting',hi:false},{t:'Lyra Template',hi:false},{t:'UE5',hi:false},
+    ],
+    desc:`Haunted House is a multiplayer level created in Unreal Engine 5 using the Lyra starter template as a base. This was a team project focused on the level design discipline.\n\nMy responsibilities covered the full level design pipeline: initial greyboxing to block out the space and test the flow, whiteboxing to flesh out the geometry and proportions, and lighting to establish the atmosphere and guide player attention. Working within the Lyra framework gave me valuable experience adapting to an existing codebase and modular design system.`,
+    links:[
+      {l:'⊞ View Level',u:'https://itch.io'},
+    ],
+  },
+];
 
-  // Mark body so CSS animation kicks in only with JS
-  document.body.classList.add('js-ready');
+/* ── BOOT ── */
+const BOOT = [
+  {t:'GAME PRODUCER OS v2026.1',c:''},
+  {t:'Loading production modules ...', c:''},
+  {t:'Mounting project filesystem ...', c:''},
+  {t:'Community hub ... ONLINE', c:'g'},
+  {t:'Authenticating portfolio ...', c:''},
+  {t:'ACCESS GRANTED', c:'g'},
+  {t:'', c:''},
+  {t:'WELCOME.', c:'b'},
+];
 
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 80);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
-
-  reveals.forEach(el => observer.observe(el));
-
+const bl = document.getElementById('boot-lines');
+let d = 0;
+BOOT.forEach(({t,c}) => {
+  d += 170 + Math.random()*110;
   setTimeout(() => {
-    reveals.forEach(el => el.classList.add('visible'));
-  }, 1500);
+    const el = document.createElement('div');
+    el.className = 'boot-line' + (c ? ' '+c : '');
+    el.textContent = t || '\u00a0';
+    bl.appendChild(el);
+  }, d);
+});
 
+setTimeout(() => {
+  const boot = document.getElementById('boot');
+  boot.style.opacity = '0';
+  setTimeout(() => {
+    boot.style.display = 'none';
+    document.getElementById('main').style.opacity = '1';
+    init();
+  }, 500);
+}, d + 350);
+
+function init() {
+  initStars(); initTicker(); initSkills();
+  initContacts(); initClock(); initTyping(); initReveal(); initModal();
+}
+
+/* ── STARS ── */
+function initStars() {
+  const c = document.getElementById('stars'), ctx = c.getContext('2d');
+  let stars = [];
+  function resize() {
+    c.width = window.innerWidth; c.height = window.innerHeight;
+    stars = Array.from({length:100},()=>({
+      x:Math.random()*c.width,y:Math.random()*c.height,
+      r:Math.random()*1+.3,a:Math.random(),spd:Math.random()*.003+.001
+    }));
+  }
+  function draw() {
+    ctx.clearRect(0,0,c.width,c.height);
+    stars.forEach(s=>{
+      s.a+=s.spd;
+      const al=(Math.sin(s.a)+1)/2*.5+.07;
+      ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,176,0,${al})`;ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  resize(); draw();
+  window.addEventListener('resize',resize);
+}
+
+/* ── TICKER ── */
+function initTicker() {
+  const t = document.getElementById('ticker');
+  [...TICKER_ITEMS,...TICKER_ITEMS].forEach(s=>{
+    const el = document.createElement('div');
+    el.className = 'ticker-item';
+    el.innerHTML = `${s.l}: <span class="tv">${s.v}</span>`;
+    t.appendChild(el);
+  });
+}
+
+/* ── SKILLS / TAG CLOUD ── */
+function initSkills() {
+  const container = document.getElementById('tag-cloud');
+  let delay = 0;
+  TAG_GROUPS.forEach(group => {
+    const g = document.createElement('div');
+    g.className = 'tag-cloud-group';
+    g.innerHTML = `<div class="tag-cloud-title">${group.title}</div>`;
+    const row = document.createElement('div');
+    row.className = 'tag-cloud-tags';
+    group.tags.forEach(tag => {
+      const el = document.createElement('span');
+      el.className = `skill-tag sz-${tag.sz}`;
+      el.textContent = tag.t;
+      el.dataset.delay = delay;
+      row.appendChild(el);
+      delay += 35;
+    });
+    g.appendChild(row);
+    container.appendChild(g);
+  });
+}
+
+/* ── CONTACTS ── */
+function initContacts() {
+  const cr = document.getElementById('contact-btns');
+  CONTACTS.forEach(c=>{
+    const b = document.createElement('button');
+    b.className = 'cbtn'; b.textContent = c.l;
+    b.onclick = () => { if(c.u !== '#') window.open(c.u,'_blank'); };
+    cr.appendChild(b);
+  });
+}
+
+/* ── CLOCK ── */
+function initClock() {
+  function tick() {
+    const n = new Date();
+    const t = [n.getHours(),n.getMinutes(),n.getSeconds()].map(x=>String(x).padStart(2,'0')).join(':');
+    document.getElementById('clock').textContent = t;
+    document.getElementById('footer-clock').textContent = `CLOCK: ${t}`;
+  }
+  tick(); setInterval(tick,1000);
+}
+
+/* ── BIO TAGS ── */
+function initBioRoles() {
+  const el = document.getElementById('bio-roles');
+  BIO_ROLES.forEach(r=>{
+    const s = document.createElement('span');
+    s.className = 'role-tag' + (r.hi?' hi':'');
+    s.textContent = r.t; el.appendChild(s);
+  });
+}
+
+/* ── TYPING ── */
+function initTyping() {
+  initBioRoles();
+  const el = document.getElementById('bio-typed');
+  const cur = document.getElementById('bio-cursor');
+  let i = 0;
+  function type() {
+    if(i < BIO.length){
+      el.textContent += BIO[i++];
+      setTimeout(type, 15+Math.random()*18);
+    } else { cur.style.display='none'; }
+  }
+  setTimeout(type, 300);
+}
+
+/* ── REVEAL ── */
+function initReveal() {
+  const tiles = document.querySelectorAll('.tile');
+  const tileObs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const idx = parseInt(e.target.dataset.ti||0);
+      setTimeout(()=>e.target.classList.add('vis'), idx*60);
+      tileObs.unobserve(e.target);
+    });
+  },{threshold:0.05});
+  tiles.forEach(t=>tileObs.observe(t));
+
+  const itemObs = new IntersectionObserver(entries=>{
+    entries.forEach(e=>{
+      if(!e.isIntersecting) return;
+      const delay = parseInt(e.target.dataset.delay||0);
+      setTimeout(()=>{ e.target.classList.add('vis'); }, delay);
+      itemObs.unobserve(e.target);
+    });
+  },{threshold:0.1});
+  document.querySelectorAll('.skill-tag').forEach(el=>itemObs.observe(el));
+}
+/* ── MODAL ── */
+function initModal() {
+  const backdrop = document.getElementById('modal-backdrop');
+
+  const ONGOING_DATA = [
+    {
+      title:'LIBRARY BUS',
+      subtitle:'Ongoing · Producer & Event Coordinator',
+      badge:{cls:'ong-badge active',txt:'● Active'},
+      roles:[{t:'Producer',hi:true},{t:'Event Coordinator',hi:true},{t:'Logistics',hi:false},{t:'Game Updates',hi:false}],
+      desc:`Library Bus continues beyond the original university project. The game was invited by Uppsala University to attend events, which I coordinate end-to-end — from logistics and travel to keeping the build updated and exhibition-ready.\n\nThis ongoing work keeps my producer hat firmly on: scheduling, stakeholder communication, and making sure we show up prepared every time.`,
+      links:[{l:'▶ Play on ITCH',u:'https://itch.io'},{l:'⊞ GGC Game Blog',u:'https://itch.io'}],
+    },
+    {
+      title:'SHIP ESCAPE',
+      subtitle:'Ongoing · Level Design',
+      badge:{cls:'ong-badge',txt:'● In Dev'},
+      roles:[{t:'Level Designer',hi:true},{t:'Greyboxing',hi:false},{t:'Whiteboxing',hi:false},{t:'Lighting',hi:false}],
+      desc:`Ship Escape is a single-player parkour level currently in development. The concept is an escape sequence set aboard a ship — tight corridors, vertical movement, and timed sections.\n\nMy responsibilities cover the full level design pipeline: greyboxing the layout and testing flow, whiteboxing to build out the geometry, and lighting to guide the player and set the mood.`,
+      links:[],
+    },
+    {
+      title:'MOCAP PROJECT',
+      subtitle:'Ongoing · Assistant Director',
+      badge:{cls:'ong-badge',txt:'● In Dev'},
+      roles:[{t:'Assistant Director',hi:true},{t:'Scheduling',hi:false},{t:'Actor Coordination',hi:false},{t:'Staff Management',hi:false}],
+      desc:`A small student team making a fighting game using motion capture. As Assistant Director, my role is to keep the production running so the director can focus on creative decisions.\n\nResponsibilities include maintaining a strict shoot schedule, coordinating actors and crew on the day, and making sure every session is prepped and running on time.`,
+      links:[],
+    },
+    {
+      title:'UF MENTORING',
+      subtitle:'Ongoing · Mentor',
+      badge:{cls:'ong-badge active',txt:'● Active'},
+      roles:[{t:'Mentor',hi:true},{t:'Game Design',hi:false},{t:'Board Game',hi:false},{t:'Middle School',hi:false}],
+      desc:`I am working as a mentor to a small group of middle schoolers who are designing and building a board game through UF (Ung Företagsamhet / Young Enterprise).\n\nI'm honoured to be a point of guidance for them — helping them think through design decisions, work as a team, and build something they're proud of.`,
+      links:[],
+    },
+    {
+      title:'GOTLAND GAME HUB',
+      subtitle:'Full-time · Community Manager',
+      badge:{cls:'ong-badge active',txt:'● Full-time'},
+      roles:[{t:'Community Manager',hi:true},{t:'Event Coordination',hi:true},{t:'Space Management',hi:false},{t:'Guest Coordination',hi:false}],
+      desc:`The Gotland Game Hub is my full-time role — a student community space for game developers at Uppsala University / Campus Gotland.\n\nI'm responsible for building out and sustaining the student community, managing the physical space, coordinating guest speakers and industry visitors, and continuously bringing new ideas to keep the hub alive and valuable for students.`,
+      links:[],
+    },
+  ];
+
+  function openModal(data) {
+    document.getElementById('modal-title').textContent = data.title;
+    document.getElementById('modal-subtitle').textContent = data.subtitle;
+
+    const mb = document.getElementById('modal-badges');
+    mb.innerHTML = '';
+    if (data.badges) {
+      data.badges.forEach(b => { mb.innerHTML += `<div class="badge ${b.cls}" title="${b.label}">${b.sym}</div>`; });
+    } else if (data.badge) {
+      mb.innerHTML = `<span class="${data.badge.cls}" style="font-size:9px;padding:3px 10px;">${data.badge.txt}</span>`;
+    }
+
+    const mr = document.getElementById('modal-roles');
+    mr.innerHTML = '';
+    data.roles.forEach(r => { mr.innerHTML += `<span class="modal-role${r.hi?' hi':''}">${r.t}</span>`; });
+
+    document.getElementById('modal-desc').innerHTML = data.desc.replace(/\n/g,'<br>');
+
+    const ml = document.getElementById('modal-links');
+    ml.innerHTML = '';
+    if (data.links) data.links.forEach(lk => {
+      ml.innerHTML += `<button class="modal-link" onclick="window.open('${lk.u}','_blank')">${lk.l}</button>`;
+    });
+
+    backdrop.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeModal() {
+    backdrop.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  // project cards
+  document.querySelectorAll('.proj-card').forEach((card, i) => {
+    card.addEventListener('click', e => {
+      if (e.target.classList.contains('plink')) return;
+      openModal(MODAL_DATA[i]);
+    });
+  });
+
+  // ongoing items
+  document.querySelectorAll('.ongoing-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const i = parseInt(item.dataset.ong);
+      openModal(ONGOING_DATA[i]);
+    });
+  });
+
+  document.getElementById('modal-close').onclick = closeModal;
+  backdrop.addEventListener('click', e => { if(e.target === backdrop) closeModal(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+}
 </script>
 </body>
 </html>
